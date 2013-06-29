@@ -54,8 +54,27 @@ class Generator
         return $this->parser;
     }
     
+    /**
+     * @return string
+     */
+    public function parse()
+    {
+        return $this->parser->parse();
+    }
     
-    
+    /**
+     * 
+     * 
+     * @param string $name
+     * @param array $arguments
+     */
+    public static function __callStatic($name, $arguments)
+    {
+        
+        // Note: value of $name is case sensitive.
+        echo "Calling static method '$name' "
+             . implode(', ', $arguments). "\n";
+    }
     
     
 }
