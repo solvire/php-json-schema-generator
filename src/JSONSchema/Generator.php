@@ -2,6 +2,8 @@
 
 namespace JSONSchema;
 
+use JSONSchema\Parsers\Parser;
+
 /**
  * 
  * JSON Schema Generator
@@ -17,8 +19,10 @@ namespace JSONSchema;
  */
 class Generator
 {
-    
-    
+    /**
+     * @var Parser $parser
+     */
+    protected $parser = null;
     
     /**
      * 
@@ -28,12 +32,30 @@ class Generator
      */
     public function __construct($subject = null, array $config = null)
     {
-        
         if($subject !== null)
-        {
-            $setParser
-        }
-        
+            $this->parser = Parsers\ParserFactory::load($subject);
     }
+    
+    /**
+     * @param Parser $parser
+     * @return $this
+     */
+    public function setParser(Parser $parser)
+    {
+        $this->parser = $parser;
+        return $this;
+    }
+    
+    /**
+     * @return Parser $parser
+     */
+    public function getParser()
+    {
+        return $this->parser;
+    }
+    
+    
+    
+    
     
 }
