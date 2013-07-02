@@ -1,0 +1,26 @@
+{
+    "name": "solvire/php-json-schema-generator",
+    "type": "library",
+    "description": "A JSON Schema Generator written in PHP. The implementation is based on current internet drafts.",
+    "keywords": ["PHP", "JSON", "Schema", "generator"],
+    "homepage": "https://github.com/solvire/php-json-schema-generator",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Steven Scott",
+            "email": "steve@openfoc.us"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "JSONSchema\\Tests": "tests/",
+            "JSONSchema": "src/"
+        }
+    }
+}

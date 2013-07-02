@@ -27,13 +27,27 @@ class ParserFactory
      */
     public static function load($subject)
     {
-        $type = self::getSubjectType($subject);
-        $classname = $type . 'Parser';
+        $prefix = self::getSubjectType($subject);
+        return self::loadByPrefix($prefix, $subject);
+    }
+    
+    /**
+     * takes a parser name prefix and gets the parser
+     * ex JSONString return JSONStringParser
+     * 
+     * @param string $prefix
+     * @param mixed $subject
+     * @throws \RuntimeException
+     * @return JSONSchema\Parsers\Parser
+     */
+    public static function loadByPrefix($prefix, $subject = null)
+    {
+        $classname = 'JSONSchema\Parsers\\' . $prefix . 'Parser';
         
         if(class_exists($classname))
-        {
             return new $classname($subject);
-        }
+        else 
+            throw new Exceptions\NoParserFoundException("Class not found: $classname ");
     }
     
     /**

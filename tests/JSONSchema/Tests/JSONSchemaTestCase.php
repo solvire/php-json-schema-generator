@@ -1,6 +1,6 @@
 <?php
 
-namespace JSONSchema;
+namespace JSONSchema\Tests;
 
 
 /**
@@ -16,11 +16,12 @@ abstract class JSONSchemaTestCase extends \PHPUnit_Framework_TestCase
      */
     public function setup()
     {
-       $dataFile = realpath(__DIR__ . '/../data/example.address.json');
+       $dataFile = realpath(__DIR__ . '/../../data/example.address.json');
        if(!file_exists($dataFile))
            throw new \RuntimeException("The file: $dataFile does not exist");
 
-       $this->addressJson1 = file_get_contents($dataFile);
+       // encoded and decoded to pack it down 
+       $this->addressJson1 = json_encode(json_decode(file_get_contents($dataFile)));
        
     }
 }

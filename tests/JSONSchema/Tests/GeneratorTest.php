@@ -1,6 +1,7 @@
 <?php
-namespace JSONSchema;
+namespace JSONSchema\Tests;
 
+use JSONSchema\Generator;
 
 class GeneratorTest extends JSONSchemaTestCase
 {
@@ -11,7 +12,7 @@ class GeneratorTest extends JSONSchemaTestCase
      */
     public function testCanParseSimple()
     {
-        $result = Generator::JSONString($this->addressJson1);
+        $result = Generator::JSONString(array('subject'=>$this->addressJson1));
     }
     
 }

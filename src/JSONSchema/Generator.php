@@ -68,12 +68,13 @@ class Generator
      * @param string $name
      * @param array $arguments
      */
-    public static function __callStatic($name, $arguments)
+    public static function __callStatic($name,array $arguments)
     {
-        
-        // Note: value of $name is case sensitive.
-        echo "Calling static method '$name' "
-             . implode(', ', $arguments). "\n";
+        if(!isset($arguments[0]['subject']))
+            throw new \InvalidArgumentException("Key: subject must be included in the arguments ");
+            
+        $parser = Parsers\ParserFactory::loadByPrefix($name,$arguments[0]['subject']);
+        return $parser->parse();
     }
     
     
