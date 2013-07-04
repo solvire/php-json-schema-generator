@@ -1,6 +1,8 @@
 <?php
 namespace JSONSchema\Parsers;
 
+use JSONSchema\Parsers\Exceptions\NoParserFoundException;
+
 /**
  * Helps in loading up the proper parser for the data type provided
  *  

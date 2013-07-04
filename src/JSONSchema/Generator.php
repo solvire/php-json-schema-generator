@@ -74,7 +74,7 @@ class Generator
             throw new \InvalidArgumentException("Key: subject must be included in the arguments ");
             
         $parser = Parsers\ParserFactory::loadByPrefix($name,$arguments[0]['subject']);
-        return $parser->parse();
+        return $parser->parse()->json();
     }
     
     
