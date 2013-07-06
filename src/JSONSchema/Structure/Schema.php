@@ -330,19 +330,18 @@ class Schema
         // add the items 
         $items = $this->getItems();
         foreach($items as $key => $item)
-        {
             $sa->items[$key] = $item->loadFields();
-        }
-        
-        print_r($properties);
         
         // add the propertiestas  
         $properties = $this->getProperties();
+        // it's an object so instantiate one 
+        if($properties)
+            $sa->properties = new \stdClass();
+
         foreach($properties as $key => $property)
-        {
             $sa->properties->$key = $property->loadFields();
-        }
-        
+
+            
         if($sa->type == PropertyTypeMapper::ARRAY_TYPE)
             return (array) $sa;
         else 

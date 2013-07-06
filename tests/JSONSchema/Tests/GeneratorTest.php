@@ -10,11 +10,19 @@ class GeneratorTest extends JSONSchemaTestCase
     /**
      * the most basic functionality
      */
-    public function testCanParseSimple()
+    public function ctestCanParseSimple()
     {
-//        print_r(json_decode($this->addressJson1));
         $result = Generator::JSONString(array('subject'=>$this->addressJson1));
-        
+        var_dump($result);
+    }
+    
+
+    /**
+     * the most basic functionality
+     */
+    public function testCanParseExample2()
+    {
+        $result = Generator::JSONString(array('subject'=>$this->addressJson2));
         var_dump($result);
     }
     

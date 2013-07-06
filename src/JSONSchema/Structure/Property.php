@@ -314,17 +314,14 @@ class Property
         
         
         $properties = $this->getProperties();
-        foreach($properties as $property)
-        {
-            $fa->properties[] = $property->loadFields();
-        }
+        if($properties)$fa->properties = new \stdClass();
+        foreach($properties as $key => $property)
+            $fa->properties->$key = $property->loadFields();
         
         // add the items 
         $items = $this->getItems();
-        foreach($items as $item)
-        {
-            $sa->items[] = $item->loadFields();
-        }
+        foreach($items as $key => $item)
+            $fa->items[] = $item->loadFields();
         
         return $fa;
     }

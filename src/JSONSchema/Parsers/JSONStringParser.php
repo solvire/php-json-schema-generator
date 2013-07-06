@@ -18,6 +18,13 @@ class JSONStringParser extends Parser
 {
     
     /**
+     * 
+     * @var array $itemFields
+     */
+    protected $itemFields = array();
+    
+    
+    /**
      * (non-PHPdoc)
      * @see JSONSchema\Parsers.Parser::parse()
      */
@@ -72,48 +79,9 @@ class JSONStringParser extends Parser
         $requiredDefault = $this->configKeyExists('requiredDefault') ? $this->getConfigSetting('requiredDefault') : false;
         $type = StringMapper::map($property);
         
-        
         if($type == StringMapper::ARRAY_TYPE)
-            $prop = new Item();
-        else 
-            $prop = new Property();
-        
-        $prop->setType($type)
-            ->setName($name)
-            ->setKey($name)    // due to the limited content ability of the basic json string
-            ->setRequired($requiredDefault);
-            
-        if($baseUrl) 
-            $prop->setId($baseUrl . '/' . $name);
-        
-        // since this is an object get the properties of the sub objects 
-        if($type == StringMapper::OBJECT_TYPE || $type == StringMapper::ARRAY_TYPE)
-            foreach($property as $key => $newProperty)
-                $prop->addProperty($key, 
-                    $this->determineProperty($newProperty, $key));
-            
-        return $prop;
-    }
-    
-    
-    /**
-     * Similar to determineProperty
-     * If there is a list of items add them individually  
-     * 
-     * @param string $item
-     * @param string $name
-     * @return Property
-     */
-    protected function determineItem($item, $name)
-    {
-        if(!is_string($item))
-            throw new InvalidParameterException();
-            
-        $baseUrl = $this->configKeyExists('baseUrl') ? $this->getConfigSetting('baseUrl') : null ;
-        $requiredDefault = $this->configKeyExists('requiredDefault') ? $this->getConfigSetting('requiredDefault') : false;
-        $type = StringMapper::map($property);
-        
-        
+            return $this->determineItem($property,$name);
+
         $prop = new Property();
         $prop->setType($type)
             ->setName($name)
@@ -123,7 +91,89 @@ class JSONStringParser extends Parser
         if($baseUrl) 
             $prop->setId($baseUrl . '/' . $name);
         
+        // since this is an object get the properties of the sub objects 
+        if($type == StringMapper::ARRAY_TYPE )
+        {
+            $prop->addItem($name, 
+                $this->determineItem($property, $name));
+        } elseif($type == StringMapper::OBJECT_TYPE) {
+            foreach($property as $key => $newProperty)
+                $prop->addProperty($key, 
+                    $this->determineProperty($newProperty, $key));
+        }
+                    
         return $prop;
+    }
+    
+    
+    /**
+     * Similar to determineProperty but with a variation  
+     * Notice that in items list there can be a collection of items - no keys here  
+     * the total items represent a full definition
+     * we are taking the collection of items 
+     * we should take the cross section of the items and figure out base items  
+     * 
+     * @param array $items
+     * @param string $name
+     * @return Property
+     */
+    protected function determineItem($items, $name)
+    {
+        $baseUrl = $this->configKeyExists('baseUrl') ? $this->getConfigSetting('baseUrl') : null ;
+        $requiredDefault = $this->configKeyExists('requiredDefault') ? $this->getConfigSetting('requiredDefault') : false;
+        $type = StringMapper::map($items);
+        
+        $retItem = new Item();
+        $retItem->setType($type)
+            ->setName($name)
+            ->setKey($name)    // due to the limited content ability of the basic json string
+            ->setRequired($requiredDefault);
+            
+        if($baseUrl) 
+            $retItem->setId($baseUrl . '/' . $name);
+            
+            
+        // since we stacked the groups of items into their major elements 
+        // add ALL of them to the item listings 
+        if($type == StringMapper::ARRAY_TYPE)
+        {
+            // loop through and get a list of the definitions 
+            // stack them together to find the greatest common 
+            foreach($items as $key => $val)
+            {
+//                if(StringMapper::map($val) !== StringMapper::ARRAY_TYPE)
+//                    continue;
+                // a collapse of each type
+                $this->stackItemFields($name, $val);
+            }
+            foreach($this->itemFields[$name] as $key => $newItem)
+                $retItem->addItem($key, 
+                    $this->determineItem($newItem, $key),
+                    true);
+            
+        }
+        elseif ($type == StringMapper::OBJECT_TYPE)
+        {
+            $retItem->addItem($key, 
+                $this->determineProperty($items, $key));
+        } 
+                    
+        return $retItem;
+    }
+    
+    /**
+     * 
+     * @param string $name
+     * @param mixed $item
+     */
+    protected function stackItemFields($name, $item)
+    {
+        // for non-loopables 
+        if(!is_array($item) && !is_object($item)) return;
+        foreach($item as $key => $val)
+        {
+            $this->itemFields[$name][$key] = $val;
+        }
     }
     
     

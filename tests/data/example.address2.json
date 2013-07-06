@@ -1,0 +1,28 @@
+{
+	"address":{
+		"streetAddress": "21 2nd Street",
+		"city":"New York"
+	},
+	"bar":{
+		"barAddress": "123 Fake st",
+ 		"city":"Los Angeles"
+	},
+	"phoneNumber":
+	[
+		{
+			"type":"home",
+ 			"number":"212 555-1234"
+		},
+		{
+			"type":"work",
+			"number":"805 666-1234",
+			"digits":"818-666-1234"
+		},
+		{
+			"type":"cell",
+			"number":"919 777-1234"
+		},
+        ["block_below"]
+	],
+	"test" : "string"
+}
