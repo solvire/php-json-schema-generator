@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="" tests="1" assertions="0" failures="0" errors="1" time="0.011764">
-    <testsuite name="JSONSchema\Tests\GeneratorTest" file="/mnt/hgfs/vm_share/php-json-schema-generator/tests/JSONSchema/Tests/GeneratorTest.php" namespace="JSONSchema\Tests" fullPackage="JSONSchema.Tests" tests="1" assertions="0" failures="0" errors="1" time="0.011764">
-      <testcase name="testCanParseSimple" class="JSONSchema\Tests\GeneratorTest" file="/mnt/hgfs/vm_share/php-json-schema-generator/tests/JSONSchema/Tests/GeneratorTest.php" line="13" assertions="0" time="0.011764">
-        <error type="JSONSchema\Parsers\Exceptions\UnprocessableSubjectException">JSONSchema\Tests\GeneratorTest::testCanParseSimple
-JSONSchema\Parsers\Exceptions\UnprocessableSubjectException: The JSONString subject was not processable - decode failed 
+  <testsuite name="" tests="1" assertions="0" failures="0" errors="1" time="0.013302">
+    <testsuite name="JSONSchema\Tests\GeneratorTest" file="/mnt/hgfs/vm_share/php-json-schema-generator/tests/JSONSchema/Tests/GeneratorTest.php" namespace="JSONSchema\Tests" fullPackage="JSONSchema.Tests" tests="1" assertions="0" failures="0" errors="1" time="0.013302">
+      <testcase name="testCanParseSimple" class="JSONSchema\Tests\GeneratorTest" file="/mnt/hgfs/vm_share/php-json-schema-generator/tests/JSONSchema/Tests/GeneratorTest.php" line="13" assertions="0" time="0.013302">
+        <error type="PHPUnit_Framework_Error_Notice">JSONSchema\Tests\GeneratorTest::testCanParseSimple
+Undefined variable: properties
 
-/mnt/hgfs/vm_share/php-json-schema-generator/src/JSONSchema/Parsers/JSONStringParser.php:24
+/mnt/hgfs/vm_share/php-json-schema-generator/src/JSONSchema/Structure/Schema.php:337
+/mnt/hgfs/vm_share/php-json-schema-generator/src/JSONSchema/Structure/Schema.php:302
+/mnt/hgfs/vm_share/php-json-schema-generator/src/JSONSchema/Parsers/Parser.php:240
 /mnt/hgfs/vm_share/php-json-schema-generator/src/JSONSchema/Generator.php:77
-/mnt/hgfs/vm_share/php-json-schema-generator/tests/JSONSchema/Tests/GeneratorTest.php:15
-/mnt/hgfs/vm_share/php-json-schema-generator/tests/JSONSchema/Tests/GeneratorTest.php:15
+/mnt/hgfs/vm_share/php-json-schema-generator/tests/JSONSchema/Tests/GeneratorTest.php:16
+/mnt/hgfs/vm_share/php-json-schema-generator/tests/JSONSchema/Tests/GeneratorTest.php:16
 </error>
       </testcase>
     </testsuite>

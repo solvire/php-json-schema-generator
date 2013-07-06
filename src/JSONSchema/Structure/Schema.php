@@ -60,10 +60,13 @@ class Schema
     protected $description = '';
 
     /**
-     * the JSON primitive type 
+     * the JSON primitive type
+     * Default MUST be object type  
+     * Section 3.2 
+     * 
      * @var string $type
      */
-    protected $type = '';
+    protected $type = 'object';
     
     /**
      * type of media content 
@@ -309,13 +312,15 @@ class Schema
     }
     
     /**
+     * Main schema generation utility 
+     * 
      * @return array list of fields and values including the properties/items 
      */
     public function loadFields()
     {
         // schema  holder 
         $sa = new \stdClass();
-        $sa->$schema = $this->dollarSchema;
+        $sa->schema = $this->dollarSchema;
         $sa->required = $this->required;
         $sa->title = $this->title;
         $sa->description = $this->description;
@@ -324,16 +329,18 @@ class Schema
         
         // add the items 
         $items = $this->getItems();
-        foreach($items as $item)
+        foreach($items as $key => $item)
         {
-            $sa->items[] = $item->loadFields();
+            $sa->items[$key] = $item->loadFields();
         }
         
-            // add the items 
-        $items = $this->getItems();
-        foreach($items as $item)
+        print_r($properties);
+        
+        // add the propertiestas  
+        $properties = $this->getProperties();
+        foreach($properties as $key => $property)
         {
-            $sa->items[] = $item->loadFields();
+            $sa->properties->$key = $property->loadFields();
         }
         
         if($sa->type == PropertyTypeMapper::ARRAY_TYPE)

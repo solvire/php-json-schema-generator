@@ -1,6 +1,12 @@
 <?php
 namespace JSONSchema\Parsers;
 
+use JSONSchema\Structure\Item;
+
+use JSONSchema\Parsers\Exceptions\NoStructureFoundException;
+
+use JSONSchema\Structure\Property;
+
 use JSONSchema\Structure\Schema;
 use JSONSchema\Parsers\Exceptions\InvalidConfigItemException;
 
@@ -91,9 +97,18 @@ abstract class Parser
     public function getConfigSetting($key)
     {
         if(!isset($this->config[$key]) || !is_string($key))
-            throw new InvalidConfigItemException();
+            throw new InvalidConfigItemException("They key: $key is not set ");
             
         return $this->config[$key];
+    }
+    
+    /**
+     * @param string $key 
+     * @return boolean
+     */
+    public function configKeyExists($key)
+    {
+        return isset($this->config[$key]);
     }
     
     /**
@@ -112,7 +127,7 @@ abstract class Parser
      */
     public function initSchema()
     {
-        $this->schema = new Schema();
+        $this->schemaObject = new Schema();
         $this->loadSchema();
     }
     
@@ -160,7 +175,24 @@ abstract class Parser
      */
     protected function appendProperty($key, Property $property)
     {
+        if(!isset($this->schemaObject))
+            throw new NoStructureFoundException("The Schema is not attached or is not initialized. ");
+            
         $this->schemaObject->addProperty($key, $property);
+        return $this;
+    }
+    
+    /**
+     * @param string $key
+     * @param JSONSchema\Structure\Item $item
+     * @return $this
+     */
+    protected function appendItem($key, Item $item)
+    {
+        if(!isset($this->schemaObject))
+            throw new NoStructureFoundException("The Schema is not attached or is not initialized. ");
+            
+        $this->schemaObject->addItem($key, $item);
         return $this;
     }
     
@@ -205,9 +237,6 @@ abstract class Parser
      */
     public function json()
     {
-        
-        $schema = $this->schemaObject->toString();
-        
-        
+        return $this->schemaObject->toString();
     }
 }

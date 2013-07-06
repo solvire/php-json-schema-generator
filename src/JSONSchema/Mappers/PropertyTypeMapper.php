@@ -38,7 +38,7 @@ class PropertyTypeMapper
         'number' => array('description' => 'A JSON number.  Number includes integer.'),
         'null' => array('description' => 'A JSON null value'),
         'object' => array('description' => 'A JSON object'),
-        'string' => array('description' => 'A JSON string')'
+        'string' => array('description' => 'A JSON string')
     );
     
     /**
@@ -51,6 +51,41 @@ class PropertyTypeMapper
             new \InvalidArgumentException("Parameter provided must be a string");
             
         $this->property = $property;
+    }
+    
+    
+    /**
+     * the goal here would be go into a logic tree and work 
+     * from loosest definition to most strict 
+     * 
+     * @param mixed $property
+     * @throws Exceptions\Unmappable
+     */
+    public static function map( $property)
+    {
+//        if(!is_string($property))
+//            throw new UnmappableException('The provided property must be a string.');
+        // need to find a better way to determine what the string is
+        switch ($property)
+        {
+            case (is_float($property)):
+                return PropertyTypeMapper::NUMBER_TYPE;
+            case (is_int($property)):
+                return PropertyTypeMapper::INTEGER_TYPE;
+            case (is_bool($property)):
+                return PropertyTypeMapper::BOOLEAN_TYPE;
+            case (is_array($property)):
+                return PropertyTypeMapper::ARRAY_TYPE;
+            case (is_null($property)):
+                return PropertyTypeMapper::NULL_TYPE;
+            case (is_object($property)):
+                return PropertyTypeMapper::OBJECT_TYPE;
+            case (is_string($property)):
+                return PropertyTypeMapper::STRING_TYPE;
+            default:
+                throw new UnmappableException("The provided argument property");
+        }
+            
     }
     
     public function setProperty($property)

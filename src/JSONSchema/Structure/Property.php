@@ -79,6 +79,15 @@ class Property
      * @var array 
      */
     protected $properties = array();
+
+    
+    /**
+     * sub items 
+     * 
+     * @var array 
+     */
+    protected $items = array();
+    
 	/**
      * @return the $id
      */
@@ -159,6 +168,14 @@ class Property
         return $this->properties;
     }
 
+	/**
+     * @return the $items
+     */
+    public function getItems()
+    {
+        return $this->items;
+    }
+    
 	/**
      * @param string $id
      */
@@ -253,6 +270,23 @@ class Property
             throw new Exceptions\OverwriteKeyException();
         
         $this->properties[$key] = $value;
+        return $this;
+    }
+    
+    
+    /**
+     * @param string $key
+     * @param Item $value
+     * @param boolean $overwrite
+     * @return $this
+     * @throws Exceptions\OverwriteKeyException
+     */
+    public function addItem($key,Item $value,$overwrite = true)
+    {
+        if(!empty($this->items[$key]) && !$overwrite)
+            throw new Exceptions\OverwriteKeyException();
+        
+        $this->items[$key] = $value;
         return $this;
     }
     
