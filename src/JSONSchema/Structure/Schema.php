@@ -44,6 +44,15 @@ class Schema
     protected $dollarSchema  = 'http://json-schema.org/draft-04/schema';
     
     /**
+     * the ID is a string reference to the resource that is identified in this document
+     * As this JSON document is defined the base URL should be provided and set otherwise
+     * the json schema
+     * 
+     * @var string $id
+     */
+    protected $id = 'http://jsonschema.net';
+    
+    /**
      * properties or items in a list which are required 
      * @var array $required
      */
@@ -114,6 +123,7 @@ class Schema
         if(!empty($this->properties[$key]) && !$overwrite)
             throw new Exceptions\OverwriteKeyException();
         
+        $value->setId($this->getId() . '/' . $key);
         $this->properties[$key] = $value;
         return $this;
     }
@@ -198,6 +208,14 @@ class Schema
     {
         return $this->dollarSchema;
     }
+    
+    /**
+     * @return $id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
 	/**
      * @return the $required
@@ -245,6 +263,17 @@ class Schema
     public function setDollarSchema($dollarSchema)
     {
         $this->dollarSchema = $dollarSchema;
+        return $this;
+    }
+    
+    /**
+     * 
+     * 
+     * @param string $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
         return $this;
     }
 
@@ -320,6 +349,7 @@ class Schema
     {
         // schema  holder 
         $sa = new \stdClass();
+        $sa->id = $this->id;
         $sa->schema = $this->dollarSchema;
         $sa->required = $this->required;
         $sa->title = $this->title;
@@ -330,7 +360,7 @@ class Schema
         // add the items 
         $items = $this->getItems();
         foreach($items as $key => $item)
-            $sa->items[$key] = $item->loadFields();
+            $sa->items[$key] = $item->loadFields($this->id);
         
         // add the propertiestas  
         $properties = $this->getProperties();

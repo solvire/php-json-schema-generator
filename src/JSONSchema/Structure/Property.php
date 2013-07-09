@@ -268,7 +268,7 @@ class Property
     {
         if(!empty($this->properties[$key]) && !$overwrite)
             throw new Exceptions\OverwriteKeyException();
-        
+
         $this->properties[$key] = $value;
         return $this;
     }
@@ -291,37 +291,38 @@ class Property
     }
     
     /**
+     * @param string $parentId - identifier for the parent element 
      * @return array fields 
      */
-    public function loadFields()
+    public function loadFields($parentId = null)
     {
         // field object - to force the object type in json encode 
         $fa = new \stdClass();
-        $fa->id = $this->id;
-        $fa->type = $this->type;
-        $fa->key = $this->key;
-        $fa->name = $this->name;
-        $fa->title = $this->title;
-        $fa->description = $this->description;
+        $fa->id = $this->id ? $this->getId() : $parentId . '/' . $this->name;
+        $fa->type = $this->getType();
+        if(isset($this->key)) $fa->key = $this->getKey();
+        $fa->name = $this->getName();
+        $fa->title = $this->getTitle();
+        if(isset($this->description)) $fa->description = $this->getDescription();
         $fa->required = $this->required;
 
         if($fa->type == PropertyTypeMapper::INTEGER_TYPE || 
             $fa->type == PropertyTypeMapper::NUMBER_TYPE )
         {
-            if(!empty($this->min)) $fa->min = $this->min;
-            if(!empty($this->max)) $fa->max = $this->max;
+            if(!empty($this->min)) $fa->min = $this->getMin();
+            if(!empty($this->max)) $fa->max = $this->getMax();
         }
         
         
         $properties = $this->getProperties();
         if($properties)$fa->properties = new \stdClass();
         foreach($properties as $key => $property)
-            $fa->properties->$key = $property->loadFields();
+            $fa->properties->$key = $property->loadFields($this->getId());
         
         // add the items 
         $items = $this->getItems();
         foreach($items as $key => $item)
-            $fa->items[] = $item->loadFields();
+            $fa->items[] = $item->loadFields($this->getId());
         
         return $fa;
     }

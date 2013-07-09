@@ -17,6 +17,7 @@
 
     <logging>
         <log type="junit" target="build/artifacts/logs/junit.xml" logIncompleteSkipped="false" />
+        <log type="coverage-html" target="report" charset="UTF-8" />
     </logging>
 
     <filter>

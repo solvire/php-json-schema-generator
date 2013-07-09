@@ -67,15 +67,16 @@ class Generator
      * 
      * @param string $name
      * @param array $arguments
+     * 	[0] == payload subject
+     *  [1] == config params // not implemented yet 
      */
     public static function __callStatic($name,array $arguments)
     {
-        if(!isset($arguments[0]['subject']))
-            throw new \InvalidArgumentException("Key: subject must be included in the arguments ");
+        if(!isset($arguments[0]) || !is_string($arguments[0]))
+            throw new \InvalidArgumentException("Key: subject must be included in the first position of the array arguments. Provided: " . serialize($arguments));
             
-        $parser = Parsers\ParserFactory::loadByPrefix($name,$arguments[0]['subject']);
+        $parser = Parsers\ParserFactory::loadByPrefix($name,$arguments[0]);
         return $parser->parse()->json();
     }
-    
     
 }

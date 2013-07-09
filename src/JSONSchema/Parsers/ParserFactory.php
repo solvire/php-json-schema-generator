@@ -17,6 +17,20 @@ class ParserFactory
 {
     
     /**
+     * List of the types of known parsers. 
+     * This should probably be moved to a config and mapping type setup
+     * @staticvar
+     * @var array $parserTypes
+     */
+    protected static $parserTypes = array(
+        'ArrayObject',
+        'Array',
+        'JSONString',
+        'Object',
+        'DoctrineEntity'
+        );
+    
+    /**
      * static class 
      */
     protected function __construct(){}
@@ -75,6 +89,14 @@ class ParserFactory
         
         throw new NoParserFoundException();
         
+    }
+    
+    /**
+     * @return array $parserTypes 
+     */
+    public static function getParserTypes()
+    {
+        return self::$parserTypes;
     }
     
 }

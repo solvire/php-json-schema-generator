@@ -141,22 +141,24 @@ class JSONStringParser extends Parser
             // stack them together to find the greatest common 
             foreach($items as $key => $val)
             {
-//                if(StringMapper::map($val) !== StringMapper::ARRAY_TYPE)
-//                    continue;
                 // a collapse of each type
                 $this->stackItemFields($name, $val);
             }
+            
+            // now that we have our commons lets add them to the items
             foreach($this->itemFields[$name] as $key => $newItem)
+            {
                 $retItem->addItem($key, 
                     $this->determineItem($newItem, $key),
                     true);
+            }
             
         }
         elseif ($type == StringMapper::OBJECT_TYPE)
         {
             $retItem->addItem($key, 
                 $this->determineProperty($items, $key));
-        } 
+        }
                     
         return $retItem;
     }

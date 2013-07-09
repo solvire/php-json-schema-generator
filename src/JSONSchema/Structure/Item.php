@@ -14,5 +14,17 @@ use JSONSchema\Mappers\PropertyTypeMapper;
  */
 class Item extends Property
 {
-    
+    /**
+     * Because the Item structure is of Array type we
+     * need to pass in the parent ID differently
+     * For now we can just hard code an :id field but later
+     * it needs to have keys for various reasons
+     * 
+     * @see JSONSchema\Structure.Property::loadFields()
+     */
+    public function loadFields($parentId = null)
+    {
+        $arrParentId = $parentId ? $parentId . '/:id' : null; 
+        return parent::loadFields($arrParentId);
+    }
 }
