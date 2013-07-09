@@ -1,4 +1,4 @@
-phpJSONSchemaGenerator
+php-json-schema-generator
 ======================
 
 PHP JSON Schema Generator
