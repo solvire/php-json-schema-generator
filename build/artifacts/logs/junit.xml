@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="" tests="3" assertions="34" failures="0" errors="0" time="0.038258">
-    <testsuite name="JSONSchema\Tests\GeneratorTest" file="/Users/steven/Documents/vm_share/php-json-schema-generator/tests/JSONSchema/Tests/GeneratorTest.php" namespace="JSONSchema\Tests" fullPackage="JSONSchema.Tests" tests="3" assertions="34" failures="0" errors="0" time="0.038258">
-      <testcase name="testCanParseSimple" class="JSONSchema\Tests\GeneratorTest" file="/Users/steven/Documents/vm_share/php-json-schema-generator/tests/JSONSchema/Tests/GeneratorTest.php" line="16" assertions="10" time="0.018466"/>
-      <testcase name="testFunctionalClassLoad" class="JSONSchema\Tests\GeneratorTest" file="/Users/steven/Documents/vm_share/php-json-schema-generator/tests/JSONSchema/Tests/GeneratorTest.php" line="40" assertions="5" time="0.005797"/>
-      <testcase name="testCanParseExample2" class="JSONSchema\Tests\GeneratorTest" file="/Users/steven/Documents/vm_share/php-json-schema-generator/tests/JSONSchema/Tests/GeneratorTest.php" line="64" assertions="19" time="0.013995"/>
+  <testsuite name="" tests="3" assertions="34" failures="0" errors="0" time="0.037028">
+    <testsuite name="JSONSchema\Tests\GeneratorTest" file="/Users/steven/Documents/vm_share/php-json-schema-generator/tests/JSONSchema/Tests/GeneratorTest.php" namespace="JSONSchema\Tests" fullPackage="JSONSchema.Tests" tests="3" assertions="34" failures="0" errors="0" time="0.037028">
+      <testcase name="testCanParseSimple" class="JSONSchema\Tests\GeneratorTest" file="/Users/steven/Documents/vm_share/php-json-schema-generator/tests/JSONSchema/Tests/GeneratorTest.php" line="16" assertions="10" time="0.017303"/>
+      <testcase name="testFunctionalClassLoad" class="JSONSchema\Tests\GeneratorTest" file="/Users/steven/Documents/vm_share/php-json-schema-generator/tests/JSONSchema/Tests/GeneratorTest.php" line="40" assertions="5" time="0.005584"/>
+      <testcase name="testCanParseExample2" class="JSONSchema\Tests\GeneratorTest" file="/Users/steven/Documents/vm_share/php-json-schema-generator/tests/JSONSchema/Tests/GeneratorTest.php" line="64" assertions="19" time="0.014141"/>
     </testsuite>
   </testsuite>
 </testsuites>
