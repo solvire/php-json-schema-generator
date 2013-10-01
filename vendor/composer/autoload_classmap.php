@@ -209,6 +209,7 @@ return array(
     'PHP_Token_CHARACTER' => $vendorDir . '/phpunit/php-token-stream/PHP/Token.php',
     'PHP_Token_CLASS' => $vendorDir . '/phpunit/php-token-stream/PHP/Token.php',
     'PHP_Token_CLASS_C' => $vendorDir . '/phpunit/php-token-stream/PHP/Token.php',
+    'PHP_Token_CLASS_NAME_CONSTANT' => $vendorDir . '/phpunit/php-token-stream/PHP/Token.php',
     'PHP_Token_CLONE' => $vendorDir . '/phpunit/php-token-stream/PHP/Token.php',
     'PHP_Token_CLOSE_BRACKET' => $vendorDir . '/phpunit/php-token-stream/PHP/Token.php',
     'PHP_Token_CLOSE_CURLY' => $vendorDir . '/phpunit/php-token-stream/PHP/Token.php',
@@ -257,6 +258,7 @@ return array(
     'PHP_Token_EXTENDS' => $vendorDir . '/phpunit/php-token-stream/PHP/Token.php',
     'PHP_Token_FILE' => $vendorDir . '/phpunit/php-token-stream/PHP/Token.php',
     'PHP_Token_FINAL' => $vendorDir . '/phpunit/php-token-stream/PHP/Token.php',
+    'PHP_Token_FINALLY' => $vendorDir . '/phpunit/php-token-stream/PHP/Token.php',
     'PHP_Token_FOR' => $vendorDir . '/phpunit/php-token-stream/PHP/Token.php',
     'PHP_Token_FOREACH' => $vendorDir . '/phpunit/php-token-stream/PHP/Token.php',
     'PHP_Token_FUNCTION' => $vendorDir . '/phpunit/php-token-stream/PHP/Token.php',
@@ -348,5 +350,6 @@ return array(
     'PHP_Token_WHILE' => $vendorDir . '/phpunit/php-token-stream/PHP/Token.php',
     'PHP_Token_WHITESPACE' => $vendorDir . '/phpunit/php-token-stream/PHP/Token.php',
     'PHP_Token_XOR_EQUAL' => $vendorDir . '/phpunit/php-token-stream/PHP/Token.php',
+    'PHP_Token_YIELD' => $vendorDir . '/phpunit/php-token-stream/PHP/Token.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/Text/Template.php',
 );

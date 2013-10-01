@@ -16,7 +16,8 @@
     },
     "require-dev": {
     	"justinrainbow/json-schema" : "*",
-        "phpunit/phpunit": "3.7.*"
+        "phpunit/phpunit": "3.7.*",
+        "justinrainbow/json-schema": "*"
     },
     "autoload": {
         "psr-0": {
