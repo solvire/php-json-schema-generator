@@ -19,16 +19,16 @@ The uses/pros/cons and other discussions related to what a schema can and cannot
 
 ## About This Tool
 
-It is a bit tedious to have to manually write out a JSON Schema every time a new REST point or Data object is created.  Because JSON can be used to represent a variety of data objects it can be helpful to have a dynamic way to map from one object to a JSON Schema. A php array is considered an object her for the sake of ease of communication.  
+It is a bit tedious to have to manually write out a JSON Schema every time a new REST point or Data object is created.  Because JSON can be used to represent a variety of data objects it can be helpful to have a dynamic way to map from one object to a JSON Schema. A php array is considered an object here for the sake of ease of communication.  
 
 The goal of the tool is to provide an trivial implement for generating a JSON Schema off a wide range of objects. Some objects provide more options for rich schema generation and some do not. JSON itself is very light on metadata so there is a requirement to infer certain meanings based on the structure of the objects.  
 
-===Parser Objects Supported
+### Parser Objects Supported
 * JSON string
   * Defined [RFC 4627](http://tools.ietf.org/html/rfc4627)
   * No validation yet
 
-===Parsers To Be Supported
+### Parsers To Be Supported
 * JSON/Schema Object
   * Loading the Schema + Properties manually
   * Can be built up easier with an API 
@@ -52,7 +52,14 @@ Simple, assuming you use composer. Add the below lines to your composer.json and
 
 
     "require": {
-        "php": ">=5.3.0",
         "solvire/php-json-schema-generator": "dev-master"
     }
     
+## Testing
+PHPUnit should be included with the composer require-dev configuration. The installation will put an
+executable in the vendor/bin directly so it can be run from there. 
+
+Run:
+
+    $ vendor/bin/phpunit
+

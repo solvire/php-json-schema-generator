@@ -2,9 +2,15 @@
 namespace JSONSchema\Tests;
 
 use JSONSchema\Parsers\JSONStringParser;
-
 use JSONSchema\Generator;
 
+/**
+ * 
+ * @group Generator
+ * @author solvire
+ * @package Tests
+ *
+ */
 class GeneratorTest extends JSONSchemaTestCase
 {
     
