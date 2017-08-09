@@ -13,7 +13,29 @@ use JSONSchema\Generator;
  */
 class GeneratorTest extends JSONSchemaTestCase
 {
-    
+
+    /**
+     * @return array
+     */
+    public function provideJsonSamples()
+    {
+        $samples = [];
+        $root = realpath(__DIR__.'/../../data/');
+        foreach (glob($root.'/*.json') as $k => $v) {
+            $samples[substr($v, strlen($root)+1)] = [$v];
+        }
+        return $samples;
+    }
+
+    /**
+     * @dataProvider provideJsonSamples
+     */
+    public function testGeneration($file)
+    {
+        $result = Generator::JSONString(file_get_contents($file));
+        $this->assertEquals($file, '');
+    }
+
     
     /**
      * the most basic functionality
