@@ -178,7 +178,7 @@ abstract class Parser
         }
 
         if (in_array($property->getType(), [StringMapper::ARRAY_TYPE, StringMapper::OBJECT_TYPE], true)) {
-            $property->setId($this->schemaObject->getId().'/'.$key);
+            $property->setId($this->schemaObject->getId() ? $this->schemaObject->getId().'/'.$key : null);
         }
 
         $this->schemaObject->setProperty($key, $property);

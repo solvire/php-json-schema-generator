@@ -31,7 +31,8 @@ class GeneratorTest extends JSONSchemaTestCase
 
     public function testBasics()
     {
-        $this->assertEquals('{"$schema":"http:\/\/json-schema.org\/draft-04\/schema#","mediaType":"application\/schema+json","id":"http:\/\/jsonschema.net","type":"object","properties":{"a":{"id":"http:\/\/jsonschema.net\/a","type":"object","properties":{"b":{"type":"integer"}}}}}', \JSONSchema\Generator::fromJson('{"a":{"b":2}}'));
+        $expected = '{"$schema":"http:\/\/json-schema.org\/draft-04\/schema#","type":"object","properties":{"a":{"type":"object","properties":{"b":{"type":"integer"}}}}}';
+        $this->assertEquals($expected, \JSONSchema\Generator::fromJson('{"a":{"b":2}}'));
     }
 
     /**
