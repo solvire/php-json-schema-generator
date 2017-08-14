@@ -3,6 +3,7 @@ namespace JSONSchema\Tests;
 
 use JSONSchema\Parsers\JSONStringParser;
 use JSONSchema\Generator;
+use JsonSchema\Validator;
 
 /**
  * 
@@ -32,8 +33,29 @@ class GeneratorTest extends JSONSchemaTestCase
      */
     public function testGeneration($file)
     {
-        $result = Generator::JSONString(file_get_contents($file));
-        $this->assertEquals($file, '');
+        $json = file_get_contents($file);
+        $schema = Generator::fromJson($json);
+
+        $this->assertTrue(!!$schema);
+
+//        print_r([
+//            "schema" => json_encode(json_decode($result), JSON_PRETTY_PRINT),
+//            'json'   => $json,
+//        ]);
+
+        /*
+         * Validate schema regarding the spec
+         */
+        $dereferencer = \League\JsonReference\Dereferencer::draft4();
+        $jsonSchemaSchema = $dereferencer->dereference('http://json-schema.org/draft-04/schema#');
+        $validator = new \League\JsonGuard\Validator(json_decode($schema), json_decode(file_get_contents(__DIR__.'/../../json-schema.draft4.json')));
+        $this->assertFalse($validator->fails(), 'should validate that the schema is a valid json schema draft 4');
+
+        /*
+         *  Validate input regarding generated schema
+         */
+        $validator = new \League\JsonGuard\Validator(json_decode($json), json_decode($schema));
+        $this->assertFalse($validator->fails(), 'should validate that the given schema ' . $schema . ' validate the input : ' . $json);
     }
 
     
@@ -43,65 +65,36 @@ class GeneratorTest extends JSONSchemaTestCase
      */
     public function testCanParseSimple()
     {
-        $result = Generator::JSONString($this->addressJson1,'test');
+        $result = Generator::fromJson($this->addressJson1);
         $decoded = json_decode($result);
+
         $this->assertTrue(is_object($decoded));
-        $this->assertTrue(isset($decoded->schema));
+        $this->assertTrue(isset($decoded->{'$schema'}));
         $this->assertTrue(isset($decoded->properties));
         $this->assertTrue(isset($decoded->properties->address));
         $this->assertTrue(isset($decoded->properties->address->type));
         $this->assertEquals($decoded->properties->address->type, 'object');
         $this->assertTrue(isset($decoded->properties->phoneNumber));
         $this->assertEquals($decoded->properties->phoneNumber->type,'array');
-        $this->assertTrue(is_array($decoded->properties->phoneNumber->items));
-        $this->assertTrue(count($decoded->properties->phoneNumber->items) == 2);
+        $this->assertTrue(is_array($decoded->properties->phoneNumber->items->anyOf));
+        $this->assertCount(1, $decoded->properties->phoneNumber->items->anyOf);
 
     }
     
-    
-    /**
-     * we are using magic methods to call the app for short signature calls
-     * We need to know that calling JSONString will call the JSONStringParser and then parse
-     * 
-     * @expectedException \InvalidArgumentException
-     */
-    public function testFunctionalClassLoad()
-    {
-        $generator = new Generator();
-        
-        $this->assertTrue($generator instanceof Generator);
-        $this->assertNull($generator->getParser());
-        
-        $parser = new JSONStringParser();
-        $generator->setParser($parser);
-        
-        // set the parser and then get the same parser back 
-        // the type should not have changed 
-        $this->assertSame($generator->getParser(),$parser);
-        $this->assertTrue($generator->getParser() instanceof JSONStringParser);
-        
-        
-        // test that we throw an exception if the subject is not provided 
-        $result = Generator::JSONString();
-        
-    }
 
     /**
      * the most basic functionality
      */
     public function testCanParseExample2()
     {
-        $generator = new Generator($this->addressJson2);
-        $this->assertTrue($generator->getParser() instanceof JSONStringParser);
-        // returns itself for chained calls
-        $this->assertTrue($generator->parse() instanceof JSONStringParser);
-        $result = $generator->getParser()->json();
-        
+        $result = Generator::fromJson($this->addressJson2);
+
         // most of the same tests as example 1
         $this->assertTrue(is_string($result));
         $decoded = json_decode($result);
+//        print_r(json_encode($decoded, JSON_PRETTY_PRINT));
         $this->assertTrue(is_object($decoded));
-        $this->assertTrue(isset($decoded->schema));
+        $this->assertTrue(is_string($decoded->{'$schema'}));
         $this->assertTrue(isset($decoded->properties));
         $this->assertTrue(isset($decoded->properties->bar));
         $this->assertTrue(isset($decoded->properties->bar->properties->barAddress));
@@ -111,8 +104,8 @@ class GeneratorTest extends JSONSchemaTestCase
         $this->assertEquals($decoded->properties->address->type, 'object');
         $this->assertTrue(isset($decoded->properties->phoneNumber));
         $this->assertEquals($decoded->properties->phoneNumber->type,'array');
-        $this->assertTrue(is_array($decoded->properties->phoneNumber->items));
-        $this->assertTrue(count($decoded->properties->phoneNumber->items) == 4);
+        $this->assertTrue(is_array($decoded->properties->phoneNumber->items->anyOf));
+        $this->assertCount(3, $decoded->properties->phoneNumber->items->anyOf);
         $this->assertTrue(isset($decoded->properties->test));
         $this->assertEquals($decoded->properties->test->type,'string');
         $this->assertEquals($decoded->properties->phoneNumber->id,'http://jsonschema.net/phoneNumber');

@@ -1,12 +1,9 @@
 <?php
 namespace JSONSchema\Parsers;
 
-use JSONSchema\Structure\Item;
-
+use JSONSchema\Mappers\StringMapper;
 use JSONSchema\Parsers\Exceptions\NoStructureFoundException;
-
-use JSONSchema\Structure\Property;
-
+use JSONSchema\Structure\Definition;
 use JSONSchema\Structure\Schema;
 use JSONSchema\Parsers\Exceptions\InvalidConfigItemException;
 
@@ -37,7 +34,7 @@ abstract class Parser
     
     /**
      * place holder for the schema object
-     * @var JSONSchema\Structure\Schema $schemaObject 
+     * @var Schema $schemaObject
      */
     protected $schemaObject;
     
@@ -73,10 +70,11 @@ abstract class Parser
     /**
      * TODO implement this function - make sure we check the params 
      * @param array $config
-     * @return $this 
+     * @return $this
      */
-    public function loadConfig($config)
+    public function loadConfig(array $config)
     {
+        $this->config = $config;
         $this->initSchema();
         return $this;
     }
@@ -170,29 +168,35 @@ abstract class Parser
     
     /**
      * @param string $key
-     * @param JSONSchema\Structure\Property $property
+     * @param Definition $property
      * @return $this
      */
-    protected function appendProperty($key, Property $property)
+    protected function appendProperty($key, Definition $property)
     {
-        if(!isset($this->schemaObject))
+        if (!isset($this->schemaObject)) {
             throw new NoStructureFoundException("The Schema is not attached or is not initialized. ");
-            
-        $this->schemaObject->addProperty($key, $property);
+        }
+
+        if (in_array($property->getType(), [StringMapper::ARRAY_TYPE, StringMapper::OBJECT_TYPE], true)) {
+            $property->setId($this->schemaObject->getId().'/'.$key);
+        }
+
+        $this->schemaObject->setProperty($key, $property);
         return $this;
     }
     
     /**
      * @param string $key
-     * @param JSONSchema\Structure\Item $item
+     * @param Definition $item
      * @return $this
      */
-    protected function appendItem($key, Item $item)
+    protected function appendItem($key, Definition $item)
     {
-        if(!isset($this->schemaObject))
+        if (!isset($this->schemaObject)) {
             throw new NoStructureFoundException("The Schema is not attached or is not initialized. ");
+        }
             
-        $this->schemaObject->addItem($key, $item);
+        $this->schemaObject->addItem($item);
         return $this;
     }
     

@@ -1,6 +1,8 @@
 <?php
 namespace JSONSchema\Mappers;
 
+use JSONSchema\Parsers\Exceptions\UnmappableException;
+
 /**
  * 
  * @package JSONSchema\Mappers
@@ -52,19 +54,18 @@ class PropertyTypeMapper
             
         $this->property = $property;
     }
-    
-    
+
+
     /**
-     * the goal here would be go into a logic tree and work 
-     * from loosest definition to most strict 
-     * 
+     * the goal here would be go into a logic tree and work
+     * from loosest definition to most strict
+     *
      * @param mixed $property
-     * @throws Exceptions\Unmappable
+     * @return string
+     * @throws UnmappableException
      */
-    public static function map( $property)
+    public static function map($property)
     {
-//        if(!is_string($property))
-//            throw new UnmappableException('The provided property must be a string.');
         // need to find a better way to determine what the string is
         switch ($property)
         {
@@ -75,7 +76,11 @@ class PropertyTypeMapper
             case (is_bool($property)):
                 return PropertyTypeMapper::BOOLEAN_TYPE;
             case (is_array($property)):
-                return PropertyTypeMapper::ARRAY_TYPE;
+                if (array_values($property) !== $property) { // hash values
+                    return PropertyTypeMapper::OBJECT_TYPE;
+                } else {
+                    return PropertyTypeMapper::ARRAY_TYPE;
+                }
             case (is_null($property)):
                 return PropertyTypeMapper::NULL_TYPE;
             case (is_object($property)):
@@ -85,7 +90,6 @@ class PropertyTypeMapper
             default:
                 throw new UnmappableException("The provided argument property");
         }
-            
     }
     
     public function setProperty($property)
