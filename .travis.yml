@@ -4,12 +4,12 @@ php:
   - 5.5
   - 5.6
   - 7.0
+  - 7.1
   - hhvm
 
 
 matrix:
   allow_failures:
-#    - php: 7.0
     - php: hhvm
   fast_finish: true
 
@@ -23,5 +23,5 @@ script:
  - phpunit
 
 
-after_script:
- - php vendor/bin/coveralls -v
+#after_script:
+# - php vendor/bin/coveralls -v
