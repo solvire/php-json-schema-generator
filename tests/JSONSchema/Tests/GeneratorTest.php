@@ -21,11 +21,17 @@ class GeneratorTest extends JSONSchemaTestCase
     public function provideJsonSamples()
     {
         $samples = [];
-        $root = realpath(__DIR__.'/../../data/');
+        $root = $this->getDataPath();
         foreach (glob($root.'/*.json') as $k => $v) {
             $samples[substr($v, strlen($root)+1)] = [$v];
         }
         return $samples;
+    }
+
+
+    public function testBasics()
+    {
+        $this->assertEquals('{"$schema":"http:\/\/json-schema.org\/draft-04\/schema#","mediaType":"application\/schema+json","id":"http:\/\/jsonschema.net","type":"object","properties":{"a":{"id":"http:\/\/jsonschema.net\/a","type":"object","properties":{"b":{"type":"integer"}}}}}', \JSONSchema\Generator::fromJson('{"a":{"b":2}}'));
     }
 
     /**
@@ -35,6 +41,8 @@ class GeneratorTest extends JSONSchemaTestCase
     {
         $json = file_get_contents($file);
         $schema = Generator::fromJson($json);
+
+
 
         $this->assertTrue(!!$schema);
 

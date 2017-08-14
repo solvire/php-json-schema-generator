@@ -23,9 +23,9 @@ class Schema extends Definition
      * As this JSON document is defined the base URL should be provided and set otherwise
      * the json schema
      * 
-     * @var string $id
+     * @var string|null $id
      */
-    protected $id = 'http://jsonschema.net';
+    protected $id;
 
     /**
      * the JSON primitive type
@@ -69,7 +69,6 @@ class Schema extends Definition
     {
         $def = new \stdClass();
         $def->{'$schema'} = $this->dollarSchema;
-        $def->mediaType = $this->mediaType; // not really part of the schema but i'm tacking it here for safe handling
         foreach (parent::flatten() as $k => $v) {
             $def->$k = $v;
         }

@@ -26,7 +26,12 @@ abstract class JSONSchemaTestCase extends \PHPUnit_Framework_TestCase
      * list of the parser types 
      */
     protected $parsers = array();
-    
+
+
+    public function getDataPath()
+    {
+        return realpath(__DIR__.'/../../data/');
+    }
 
     /**
      * since we will probably use the example.address.json data all over the place lets go ahead and load it up 
@@ -34,22 +39,7 @@ abstract class JSONSchemaTestCase extends \PHPUnit_Framework_TestCase
      */
     public function setup()
     {
-       $dataFile = realpath(__DIR__ . '/../../data/example.address1.json');
-       if(!file_exists($dataFile))
-           throw new \RuntimeException("The file: $dataFile does not exist");
-
-       // encoded and decoded to pack it down 
-       $this->addressJson1 = json_encode(json_decode(file_get_contents($dataFile)));
-       
-       
-       $dataFile = realpath(__DIR__ . '/../../data/example.address2.json');
-       if(!file_exists($dataFile))
-           throw new \RuntimeException("The file: $dataFile does not exist");
-       $this->addressJson2 = json_encode(json_decode(file_get_contents($dataFile)));
-
-       
-       $this->parsers = ParserFactory::getParserTypes();
-       
-       
+       $this->addressJson1 = json_encode(json_decode(file_get_contents($this->getDataPath().'/example.address1.json')), JSON_PRETTY_PRINT);
+       $this->addressJson2 = json_encode(json_decode(file_get_contents($this->getDataPath().'/example.address2.json')), JSON_PRETTY_PRINT);
     }
 }

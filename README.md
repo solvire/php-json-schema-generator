@@ -8,6 +8,29 @@ Package: php-json-schema-generator
 
 PHP JSON Schema Generator
 
+## Quickstart
+
+Can't be easier
+
+
+    $output = JSONSchema\Generator::fromJson('{"a":{"b":2}'); 
+    // $output ==> json string
+    // {
+    //   "$schema": "http://json-schema.org/draft-04/schema#",
+    //   "type": "object",
+    //   "properties": {
+    //     "a": {
+    //       "type": "object",
+    //       "properties": {
+    //         "b": {
+    //           "type": "integer"
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
+
+
 ## About JSON Schema
 
 JSON has become a mainstay in the vast HTTP toolbox. In order to make JSON more stable and to increase the longevity of the data structure there must be some standards put into place.  These standards will help to define the structure in a way that the industry can rely on.  A uniform way to parse the data and interpret the meaning of the data elements can be found in building a schema that represents it. 

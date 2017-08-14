@@ -1,22 +1,27 @@
 {
-    "name": "solvire/php-json-schema-generator",
+    "name": "evaisse/php-json-schema-generator",
     "type": "library",
-    "description": "A JSON Schema Generator written in PHP. The implementation is based on current internet drafts.",
+    "description": "A JSON Schema Generator.",
     "keywords": ["PHP", "JSON", "Schema", "generator", "validation", "parser"],
-    "homepage": "https://github.com/solvire/php-json-schema-generator",
+    "homepage": "https://github.com/evaisse/php-json-schema-generator",
     "license": "MIT",
     "authors": [
         {
             "name": "Steven Scott",
             "email": "steve@openfoc.us"
+        },
+        {
+            "name": "Emmanuel VAÏSSE",
+            "email": "evaisse@gmail.com"
         }
     ],
     "require": {
         "php": ">=5.4.0",
-        "league/json-guard": "^1.0"
+        "satooshi/php-coveralls": "^1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
+        "league/json-guard": "^1.0",
         "league/json-reference": "^1.0"
     },
     "autoload": {
