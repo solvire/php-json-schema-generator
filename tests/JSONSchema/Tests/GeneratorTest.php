@@ -92,7 +92,6 @@ class GeneratorTest extends JSONSchemaTestCase
         // most of the same tests as example 1
         $this->assertTrue(is_string($result));
         $decoded = json_decode($result);
-//        print_r(json_encode($decoded, JSON_PRETTY_PRINT));
         $this->assertTrue(is_object($decoded));
         $this->assertTrue(is_string($decoded->{'$schema'}));
         $this->assertTrue(isset($decoded->properties));
