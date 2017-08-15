@@ -2,8 +2,7 @@
 
 namespace JSONSchema;
 
-use JSONSchema\Parsers\JSONStringParser;
-use JSONSchema\Parsers\Parser;
+use JSONSchema\Parsers\BaseParser;
 
 /**
  *
@@ -22,13 +21,23 @@ abstract class Generator
 {
 
     /**
+     * @param mixed $object
+     * @return string
+     */
+    public static function from($object, array $config = null)
+    {
+        $parser = new BaseParser($config);
+        return $parser->parse($object)->json();
+    }
+
+    /**
      * @param string $jsonString
      * @return string
      */
     public static function fromJson($jsonString, array $config = null)
     {
-        $parser = new JSONStringParser($config);
-        return $parser->parse($jsonString)->json();
+        $parser = new BaseParser($config);
+        return $parser->parse(json_decode($jsonString))->json();
     }
 
 }

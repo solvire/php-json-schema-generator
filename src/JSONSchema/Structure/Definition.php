@@ -15,6 +15,10 @@ use JSONSchema\Mappers\StringMapper;
 class Definition implements \JsonSerializable
 {
 
+
+    const ITEMS_AS_COLLECTION = 0; // use anyOf instead of strict collection
+    const ITEMS_AS_LIST = 1;
+
     /**
      * link to the resource identifier
      *
@@ -90,6 +94,10 @@ class Definition implements \JsonSerializable
      */
     protected $enum = null;
 
+    /**
+     * @var int items collection mode, convert a list of various schema using anyOf or strict positionnal list of schema
+     */
+    protected $collectionMode = 0;
 
     /**
      * setup default values
@@ -275,19 +283,23 @@ class Definition implements \JsonSerializable
     }
 
     /**
-     * @param Definition $value
+     * @param Definition $def
      * @return $this
      */
-    public function addItem(Definition $value)
+    public function addItem(Definition $def)
     {
+        if ($this->getCollectionMode() === self::ITEMS_AS_COLLECTION) {
+            $def->setId(null); // make schema anonymous
+        }
+
         foreach ($this->items as $i) {
-            if ($i->equals($value)) {
-                // item already in list
+            if ($this->getCollectionMode() === self::ITEMS_AS_COLLECTION && $i->equals($def)) {
+                // item schema type already in list
                 return $this;
             }
         }
 
-        $this->items[] = $value;
+        $this->items[] = $def;
         return $this;
     }
 
@@ -356,15 +368,13 @@ class Definition implements \JsonSerializable
             $fa->id = $this->getId();
         }
 
-
-
         $fa->type = $this->getType();
 
         if ($this->getTitle()) {
             $fa->title = $this->getTitle();
         }
 
-        if (!empty($this->description)) {
+        if ($this->getDescription()) {
             $fa->description = $this->getDescription();
         }
 
@@ -379,23 +389,37 @@ class Definition implements \JsonSerializable
             }
         }
 
+        /*
+         * If a default value had been set
+         */
         if (!$this->defaultValue instanceof UndefinedValue) {
             $fa->default = $this->defaultValue;
         }
 
         if ($this->getType() === StringMapper::ARRAY_TYPE) {
+
             // add the items
             $items = [];
             foreach ($this->getItems() as $key => $item) {
                 $items[] = $item->flatten();
             }
-            $fa->items = new \StdClass();
-            $fa->items->anyOf = $items;
+
+            if ($this->getCollectionMode() == self::ITEMS_AS_LIST) {
+                $fa->items = $items;
+            } else {
+                // collection of various schema using 'anyOf'
+                $fa->items = new \StdClass();
+                $fa->items->anyOf = $items;
+            }
 
         } else if ($this->getType() === StringMapper::OBJECT_TYPE) {
+
+
+
             if ($this->getRequireds()) {
                 $fa->required = $this->getRequireds();
             }
+
             if ($this->getProperties()) {
                 $fa->properties = new \StdClass();
                 foreach ($this->getProperties() as $key => $property) {
@@ -406,6 +430,27 @@ class Definition implements \JsonSerializable
 
         return $fa;
     }
+
+    /**
+     * @return int
+     */
+    public function getCollectionMode()
+    {
+        return $this->collectionMode;
+    }
+
+    /**
+     * @param int $collectionMode
+     * @return Definition
+     */
+    public function setCollectionMode($collectionMode)
+    {
+        $this->collectionMode = $collectionMode;
+
+        return $this;
+    }
+
+
 
     /**
      * @return \stdClass

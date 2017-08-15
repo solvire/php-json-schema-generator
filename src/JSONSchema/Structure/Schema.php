@@ -16,7 +16,7 @@ class Schema extends Definition
     /**
      * @var string
      */
-    protected $dollarSchema  = 'http://json-schema.org/draft-04/schema#';
+    protected $dollarSchema = 'http://json-schema.org/draft-04/schema#';
     
     /**
      * the ID is a string reference to the resource that is identified in this document
@@ -74,6 +74,22 @@ class Schema extends Definition
         }
 
         return $def;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDollarSchema()
+    {
+        return $this->dollarSchema;
+    }
+
+    /**
+     * @param string $dollarSchema
+     */
+    public function setDollarSchema($dollarSchema)
+    {
+        $this->dollarSchema = $dollarSchema;
     }
 
 

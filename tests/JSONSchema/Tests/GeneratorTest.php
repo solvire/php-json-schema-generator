@@ -3,6 +3,7 @@ namespace JSONSchema\Tests;
 
 use JSONSchema\Parsers\JSONStringParser;
 use JSONSchema\Generator;
+use JSONSchema\Structure\Definition;
 use JsonSchema\Validator;
 
 /**
@@ -43,14 +44,7 @@ class GeneratorTest extends JSONSchemaTestCase
         $json = file_get_contents($file);
         $schema = Generator::fromJson($json);
 
-
-
         $this->assertTrue(!!$schema);
-
-//        print_r([
-//            "schema" => json_encode(json_decode($result), JSON_PRETTY_PRINT),
-//            'json'   => $json,
-//        ]);
 
         /*
          * Validate schema regarding the spec
@@ -74,8 +68,12 @@ class GeneratorTest extends JSONSchemaTestCase
      */
     public function testCanParseSimple()
     {
-        $result = Generator::fromJson($this->addressJson1);
+        $result = Generator::fromJson($this->addressJson1, [
+            'schema_id' => 'http://foo.bar/schema'
+        ]);
         $decoded = json_decode($result);
+
+        print_r(json_encode($decoded, JSON_PRETTY_PRINT));
 
         $this->assertTrue(is_object($decoded));
         $this->assertTrue(isset($decoded->{'$schema'}));
@@ -89,18 +87,21 @@ class GeneratorTest extends JSONSchemaTestCase
         $this->assertCount(1, $decoded->properties->phoneNumber->items->anyOf);
 
     }
-    
 
     /**
      * the most basic functionality
      */
     public function testCanParseExample2()
     {
-        $result = Generator::fromJson($this->addressJson2);
-
+        $result = Generator::fromJson($this->addressJson2, [
+            'schema_id' => "http://foo.bar"
+        ]);
         // most of the same tests as example 1
         $this->assertTrue(is_string($result));
         $decoded = json_decode($result);
+
+        print_r(json_encode($decoded, JSON_PRETTY_PRINT));
+
         $this->assertTrue(is_object($decoded));
         $this->assertTrue(is_string($decoded->{'$schema'}));
         $this->assertTrue(isset($decoded->properties));
@@ -116,8 +117,46 @@ class GeneratorTest extends JSONSchemaTestCase
         $this->assertCount(3, $decoded->properties->phoneNumber->items->anyOf);
         $this->assertTrue(isset($decoded->properties->test));
         $this->assertEquals($decoded->properties->test->type,'string');
-        $this->assertEquals($decoded->properties->phoneNumber->id,'http://jsonschema.net/phoneNumber');
+        $this->assertEquals($decoded->properties->phoneNumber->id,'http://foo.bar/phoneNumber');
         
     }
-    
+
+
+
+    /**
+     * the most basic functionality
+     * simple tests to just show it's working
+     */
+    public function testCanParseStrictModeList()
+    {
+        $result = Generator::fromJson($this->addressJson2, [
+            'schema_id'                      => 'http://bar.foo/schema2',
+            'schema_title'                   => 'coucouc',
+            'schema_description'             => 'desc',
+//            'schema_type'                    => 'mytype',
+            "items_schema_collect_mode"      => Definition::ITEMS_AS_LIST,
+        ]);
+
+        // most of the same tests as example 1
+        $this->assertTrue(is_string($result));
+        $decoded = json_decode($result);
+
+        $this->assertTrue(is_object($decoded));
+        $this->assertTrue(is_string($decoded->{'$schema'}));
+        $this->assertTrue(isset($decoded->properties));
+        $this->assertTrue(isset($decoded->properties->bar));
+        $this->assertTrue(isset($decoded->properties->bar->properties->barAddress));
+        $this->assertTrue(isset($decoded->properties->bar->properties->city));
+        $this->assertTrue(isset($decoded->properties->address));
+        $this->assertTrue(isset($decoded->properties->address->type));
+        $this->assertEquals($decoded->properties->address->type, 'object');
+        $this->assertTrue(isset($decoded->properties->phoneNumber));
+        $this->assertEquals($decoded->properties->phoneNumber->type,'array');
+        $this->assertTrue(is_array($decoded->properties->phoneNumber->items));
+        $this->assertCount(4, $decoded->properties->phoneNumber->items);
+        $this->assertTrue(isset($decoded->properties->test));
+        $this->assertEquals($decoded->properties->test->type,'string');
+        $this->assertEquals($decoded->properties->phoneNumber->id,'http://bar.foo/schema2/phoneNumber');
+
+    }
 }
