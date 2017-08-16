@@ -32,8 +32,11 @@ class GeneratorTest extends JSONSchemaTestCase
 
     public function testBasics()
     {
-        $expected = '{"$schema":"http:\/\/json-schema.org\/draft-04\/schema#","type":"object","properties":{"a":{"type":"object","properties":{"b":{"type":"integer"}}}}}';
-        $this->assertEquals($expected, \JSONSchemaGenerator\Generator::fromJson('{"a":{"b":2}}'));
+        $input = '{"a":{"b":2}}';
+        $res = \JSONSchemaGenerator\Generator::fromJson($input);
+        $expected = '{"$schema":"http:\/\/json-schema.org\/draft-04\/schema#","type":"object","required":["a"],"properties":{"a":{"type":"object","required":["b"],"properties":{"b":{"type":"integer"}}}}}';
+        $this->assertEquals($expected, $res);
+        $this->validateSchemaAgainst($res, $input);
     }
 
     /**
@@ -46,19 +49,7 @@ class GeneratorTest extends JSONSchemaTestCase
 
         $this->assertTrue(!!$schema);
 
-        /*
-         * Validate schema regarding the spec
-         */
-        $dereferencer = \League\JsonReference\Dereferencer::draft4();
-        $jsonSchemaSchema = $dereferencer->dereference('http://json-schema.org/draft-04/schema#');
-        $validator = new \League\JsonGuard\Validator(json_decode($schema), json_decode(file_get_contents(__DIR__.'/../../json-schema.draft4.json')));
-        $this->assertFalse($validator->fails(), 'should validate that the schema is a valid json schema draft 4');
-
-        /*
-         *  Validate input regarding generated schema
-         */
-        $validator = new \League\JsonGuard\Validator(json_decode($json), json_decode($schema));
-        $this->assertFalse($validator->fails(), 'should validate that the given schema ' . $schema . ' validate the input : ' . $json);
+        $this->validateSchemaAgainst($schema, $json);
     }
 
     
@@ -71,9 +62,12 @@ class GeneratorTest extends JSONSchemaTestCase
         $result = Generator::fromJson($this->addressJson1, [
             'schema_id' => 'http://foo.bar/schema'
         ]);
+
+        $this->debug($result);
+
         $decoded = json_decode($result);
 
-        print_r(json_encode($decoded, JSON_PRETTY_PRINT));
+        $this->validateSchemaAgainst($result, $this->addressJson1);
 
         $this->assertTrue(is_object($decoded));
         $this->assertTrue(isset($decoded->{'$schema'}));
@@ -86,6 +80,7 @@ class GeneratorTest extends JSONSchemaTestCase
         $this->assertTrue(is_array($decoded->properties->phoneNumber->items->anyOf));
         $this->assertCount(1, $decoded->properties->phoneNumber->items->anyOf);
 
+
     }
 
     /**
@@ -96,11 +91,17 @@ class GeneratorTest extends JSONSchemaTestCase
         $result = Generator::fromJson($this->addressJson2, [
             'schema_id' => "http://foo.bar"
         ]);
+
+        $this->validateSchemaAgainst($result, $this->addressJson2);
+
         // most of the same tests as example 1
         $this->assertTrue(is_string($result));
+
+        $this->debug($result);
+
         $decoded = json_decode($result);
 
-        print_r(json_encode($decoded, JSON_PRETTY_PRINT));
+        $this->debug(json_encode($decoded, JSON_PRETTY_PRINT));
 
         $this->assertTrue(is_object($decoded));
         $this->assertTrue(is_string($decoded->{'$schema'}));
@@ -133,9 +134,12 @@ class GeneratorTest extends JSONSchemaTestCase
             'schema_id'                      => 'http://bar.foo/schema2',
             'schema_title'                   => 'coucouc',
             'schema_description'             => 'desc',
-//            'schema_type'                    => 'mytype',
             "items_schema_collect_mode"      => Definition::ITEMS_AS_LIST,
         ]);
+
+        $this->debug($result);
+
+        $this->validateSchemaAgainst($result, $this->addressJson2);
 
         // most of the same tests as example 1
         $this->assertTrue(is_string($result));
@@ -158,5 +162,63 @@ class GeneratorTest extends JSONSchemaTestCase
         $this->assertEquals($decoded->properties->test->type,'string');
         $this->assertEquals($decoded->properties->phoneNumber->id,'http://bar.foo/schema2/phoneNumber');
 
+    }
+
+
+    public function testRequiredProperties()
+    {
+        $result = Generator::fromJson($this->addressJson2);
+
+        $this->validateSchemaAgainst($result, $this->addressJson2);
+
+        $this->assertTrue(is_string($result));
+        $decoded = json_decode($result);
+
+        $this->debug($result);
+
+        $this->assertCount(4, $decoded->required, 'should have required properties');
+        $this->assertCount(2, $decoded->properties->bar->required, 'sub selements should have required properties');
+
+        $result = Generator::fromJson($this->addressJson2, [
+            'properties_required_by_default' => false,
+        ]);
+
+        $this->validateSchemaAgainst($result, $this->addressJson2);
+
+        $this->assertTrue(is_string($result));
+        $decoded = json_decode($result);
+        $this->assertTrue(!isset($decoded->required), 'should not have the required property');
+        $this->assertTrue(!isset($decoded->properties->bar->required), 'sub definitions should not have the required property also');
+
+        $result = Generator::fromJson($this->addressJson2, [
+            'properties_required_by_default' => false,
+            'schema_required_field_names'    => ['barAddress'], // just make this field required
+        ]);
+
+        $this->validateSchemaAgainst($result, $this->addressJson2);
+
+        $this->assertTrue(is_string($result));
+        $decoded = json_decode($result);
+
+        $this->assertTrue(!isset($decoded->required), 'should only have the required property for one def');
+        $this->assertTrue(!isset($decoded->properties->address->required), 'should only have the required property for one def');
+        $this->assertCount(1, $decoded->properties->bar->required, 'One prop only should be required');
+        $this->assertContains("barAddress", $decoded->properties->bar->required, '"barAddress", Should be required');
+
+        $this->debug($decoded);
+    }
+
+
+
+    /**
+     * display output only if getenv('DEBUG') is set
+     */
+    protected function debug()
+    {
+        if (getenv('DEBUG')) {
+            foreach (func_get_args() as $a) {
+                is_scalar($a) ? var_dump($a) : print_r($a);
+            }
+        }
     }
 }

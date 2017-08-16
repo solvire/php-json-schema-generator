@@ -316,6 +316,7 @@ class Definition implements \JsonSerializable
                 $requireds[] = $name;
             }
         }
+        return $requireds;
     }
 
     /**
@@ -413,7 +414,6 @@ class Definition implements \JsonSerializable
             }
 
         } else if ($this->getType() === StringMapper::OBJECT_TYPE) {
-
 
 
             if ($this->getRequireds()) {
