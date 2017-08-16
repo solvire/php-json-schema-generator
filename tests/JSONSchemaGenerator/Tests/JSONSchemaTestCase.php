@@ -40,11 +40,11 @@ abstract class JSONSchemaTestCase extends \PHPUnit_Framework_TestCase
     public function setup()
     {
         $this->addressJson1 = json_encode(
-            json_decode(file_get_contents($this->getDataPath().'/example.address1.json')),
+            json_decode(file_get_contents($this->getDataPath().'/example-address1.input.json')),
             JSON_PRETTY_PRINT
         );
         $this->addressJson2 = json_encode(
-            json_decode(file_get_contents($this->getDataPath().'/example.address2.json')),
+            json_decode(file_get_contents($this->getDataPath().'/example-address2.input.json')),
             JSON_PRETTY_PRINT
         );
     }

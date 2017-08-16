@@ -19,3 +19,7 @@ install:
 script:
  - mkdir -p build/logs
  - composer test
+
+
+#after_success:
+#    - bash <(curl -s https://codecov.io/bash)

@@ -23,7 +23,7 @@ class GeneratorTest extends JSONSchemaTestCase
     {
         $samples = [];
         $root = $this->getDataPath();
-        foreach (glob($root.'/*.json') as $k => $v) {
+        foreach (glob($root.'/example*.input.json') as $k => $v) {
             $samples[substr($v, strlen($root)+1)] = [$v];
         }
         return $samples;
@@ -42,7 +42,7 @@ class GeneratorTest extends JSONSchemaTestCase
     /**
      * @dataProvider provideJsonSamples
      */
-    public function testGeneration($file)
+    public function testDefaultGeneration($file)
     {
         $json = file_get_contents($file);
         $schema = Generator::fromJson($json);
@@ -50,7 +50,17 @@ class GeneratorTest extends JSONSchemaTestCase
         $this->assertTrue(!!$schema);
 
         $this->validateSchemaAgainst($schema, $json);
+
+        /*
+         * Check mocks against their schema
+         */
+        $this->assertEquals(
+            $schema,
+            json_encode(json_decode(file_get_contents(str_replace('.input.json', '.schema.json', $file)))), // disable pretty prinitng
+            'Should be equals to data examples'
+        );
     }
+
 
     
     /**
