@@ -1,8 +1,8 @@
 <?php
-namespace JSONSchema\Parsers\Exceptions;
+namespace JSONSchemaGenerator\Parsers\Exceptions;
 
 /**
- * @package JSONSchema\Parsers\Exceptions
+ * @package JSONSchemaGenerator\Parsers\Exceptions
  * @author steven
  */
 class InvalidParameterException extends \RuntimeException

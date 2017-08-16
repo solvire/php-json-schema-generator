@@ -4,11 +4,11 @@
  * Date: 14/08/2017
  * Time: 14:38
  */
-namespace JSONSchema\Parsers\Exceptions;
+namespace JSONSchemaGenerator\Parsers\Exceptions;
 
 /**
  * Class ParserException
- * @package JSONSchema\Parsers\Exceptions
+ * @package JSONSchemaGenerator\Parsers\Exceptions
  */
 class ParseException extends \Exception
 {

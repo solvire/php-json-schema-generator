@@ -1,5 +1,5 @@
 <?php
-namespace JSONSchema\Parsers\Exceptions;
+namespace JSONSchemaGenerator\Parsers\Exceptions;
 
 /**
  * @author solvire

@@ -1,9 +1,9 @@
 <?php
-namespace JSONSchema\Tests;
+namespace JSONSchemaGenerator\Tests;
 
-use JSONSchema\Parsers\JSONStringParser;
-use JSONSchema\Generator;
-use JSONSchema\Structure\Definition;
+use JSONSchemaGenerator\Parsers\JSONStringParser;
+use JSONSchemaGenerator\Generator;
+use JSONSchemaGenerator\Structure\Definition;
 use JsonSchema\Validator;
 
 /**
@@ -33,7 +33,7 @@ class GeneratorTest extends JSONSchemaTestCase
     public function testBasics()
     {
         $expected = '{"$schema":"http:\/\/json-schema.org\/draft-04\/schema#","type":"object","properties":{"a":{"type":"object","properties":{"b":{"type":"integer"}}}}}';
-        $this->assertEquals($expected, \JSONSchema\Generator::fromJson('{"a":{"b":2}}'));
+        $this->assertEquals($expected, \JSONSchemaGenerator\Generator::fromJson('{"a":{"b":2}}'));
     }
 
     /**

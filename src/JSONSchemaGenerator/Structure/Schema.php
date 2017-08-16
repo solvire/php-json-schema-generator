@@ -1,5 +1,5 @@
 <?php
-namespace JSONSchema\Structure;
+namespace JSONSchemaGenerator\Structure;
 
 /**
  * A JSON document
@@ -8,7 +8,7 @@ namespace JSONSchema\Structure;
  *
  * @link http://tools.ietf.org/html/draft-zyp-json-schema-04#section-3.2
  * @author steven
- * @package JSONSchema\Structure
+ * @package JSONSchemaGenerator\Structure
  */
 class Schema extends Definition
 {

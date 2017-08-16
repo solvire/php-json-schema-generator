@@ -1,17 +1,17 @@
 <?php
-namespace JSONSchema\Parsers;
+namespace JSONSchemaGenerator\Parsers;
 
-use JSONSchema\Mappers\StringMapper;
-use JSONSchema\Parsers\Exceptions\NoStructureFoundException;
-use JSONSchema\Structure\Definition;
-use JSONSchema\Structure\Schema;
-use JSONSchema\Parsers\Exceptions\InvalidConfigItemException;
+use JSONSchemaGenerator\Mappers\StringMapper;
+use JSONSchemaGenerator\Parsers\Exceptions\NoStructureFoundException;
+use JSONSchemaGenerator\Structure\Definition;
+use JSONSchemaGenerator\Structure\Schema;
+use JSONSchemaGenerator\Parsers\Exceptions\InvalidConfigItemException;
 
 /**
  * Main parser base class
  *
  * @author  steven
- * @package JSONSchema\Parsers
+ * @package JSONSchemaGenerator\Parsers
  * @abstract
  */
 class BaseParser

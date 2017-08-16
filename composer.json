@@ -25,9 +25,9 @@
         "league/json-reference": "^1.0"
     },
     "autoload": {
-        "psr-0": {
-            "JSONSchema\\Tests": "tests/",
-            "JSONSchema": "src/"
+        "psr-4": {
+            "JSONSchemaGenerator\\Tests\\": "tests/JSONSchemaGenerator/Tests/",
+            "JSONSchemaGenerator\\": "src/JSONSchemaGenerator/"
         }
     },
     "scripts": {

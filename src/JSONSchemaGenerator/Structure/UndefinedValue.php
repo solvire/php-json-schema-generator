@@ -4,11 +4,11 @@
  * Date: 14/08/2017
  * Time: 16:36
  */
-namespace JSONSchema\Structure;
+namespace JSONSchemaGenerator\Structure;
 
 /**
  * Class Undefined
- * @package JSONSchema\Structure
+ * @package JSONSchemaGenerator\Structure
  */
 class UndefinedValue
 {

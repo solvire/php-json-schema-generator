@@ -1,11 +1,11 @@
 <?php
-namespace JSONSchema\Mappers;
+namespace JSONSchemaGenerator\Mappers;
 
-use JSONSchema\Parsers\Exceptions\UnmappableException;
+use JSONSchemaGenerator\Parsers\Exceptions\UnmappableException;
 
 /**
  * 
- * @package JSONSchema\Mappers
+ * @package JSONSchemaGenerator\Mappers
  * @author steven
  *
  */

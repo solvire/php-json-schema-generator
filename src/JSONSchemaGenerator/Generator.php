@@ -1,8 +1,8 @@
 <?php
 
-namespace JSONSchema;
+namespace JSONSchemaGenerator;
 
-use JSONSchema\Parsers\BaseParser;
+use JSONSchemaGenerator\Parsers\BaseParser;
 
 /**
  *

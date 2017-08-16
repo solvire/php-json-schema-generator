@@ -1,8 +1,8 @@
 <?php
-namespace JSONSchema\Structure\Exceptions;
+namespace JSONSchemaGenerator\Structure\Exceptions;
 
 /**
- * @package JSONSchema\Structure\Exceptions
+ * @package JSONSchemaGenerator\Structure\Exceptions
  * @author steven
  */
 class UnmappableException extends \InvalidArgumentException

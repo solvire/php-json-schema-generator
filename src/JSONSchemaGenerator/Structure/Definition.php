@@ -1,8 +1,8 @@
 <?php
-namespace JSONSchema\Structure;
+namespace JSONSchemaGenerator\Structure;
 
-use JSONSchema\Mappers\PropertyTypeMapper;
-use JSONSchema\Mappers\StringMapper;
+use JSONSchemaGenerator\Mappers\PropertyTypeMapper;
+use JSONSchemaGenerator\Mappers\StringMapper;
 
 /**
  * Represents a Definition or Member as defined
@@ -117,7 +117,7 @@ class Definition implements \JsonSerializable
     }
 
     /**
-     * @return string the $type from JSONSchema\Mappers\StringMapper::*
+     * @return string the $type from JSONSchemaGenerator\Mappers\StringMapper::*
      */
     public function getType()
     {

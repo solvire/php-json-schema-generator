@@ -1,8 +1,8 @@
 <?php
 
-namespace JSONSchema\Tests;
+namespace JSONSchemaGenerator\Tests;
 
-use JSONSchema\Parsers\ParserFactory;
+use JSONSchemaGenerator\Parsers\ParserFactory;
 
 /**
  * Base test case for JSON Schema Tests
