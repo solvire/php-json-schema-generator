@@ -7,6 +7,7 @@ PHP JSON Schema Generator, introduction to json schema below :
  - http://json-schema.org
  - http://www.jsonschemavalidator.net
  - https://www.openapis.org
+ - https://jsonschema.net/#/editor
  
 To validate your structure against a given schema, you can use :
 

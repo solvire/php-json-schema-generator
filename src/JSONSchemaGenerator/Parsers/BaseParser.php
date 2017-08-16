@@ -138,16 +138,40 @@ class BaseParser
     }
 
     /**
-     * top level
-     * every recurse under this will add to the properties of the property
-     *
-     * @param array $jsonObj
+     * top level every recurse under this will add to the properties of the property
+     * @param mixed $inputVar
+     * @return self
      */
-    protected function loadObjectProperties($jsonObj)
+    protected function loadObjectProperties($inputVar)
     {
         // start walking the object
-        foreach ($jsonObj as $key => $property) {
-            $this->appendProperty($key, $this->determineProperty($property));
+        $type = StringMapper::map($inputVar);
+
+        $this->schemaObject->setType($type);
+
+        if ($type === StringMapper::STRING_TYPE) {
+            $this->schemaObject->setFormat(StringMapper::guessStringFormat($inputVar));
+        }
+
+        /*
+         * Top level schema is a simple salar value, just stop there
+         */
+        if (!in_array($type, [StringMapper::ARRAY_TYPE, StringMapper::OBJECT_TYPE], true)) {
+            return $this;
+        }
+
+        /*
+         * Top level Schema is an array of an object, continue for deep inspection
+         */
+        foreach ($inputVar as $key => $property) {
+            $property = $this->determineProperty($property);
+
+            if (in_array($property->getType(), [StringMapper::ARRAY_TYPE, StringMapper::OBJECT_TYPE], true)) {
+                $property->setId($this->schemaObject->getId() ? $this->schemaObject->getId().'/'.$key : null);
+            }
+
+            $type == StringMapper::ARRAY_TYPE ? $this->schemaObject->addItem($property)
+                                              : $this->schemaObject->setProperty($key, $property);
         }
     }
 
@@ -178,12 +202,18 @@ class BaseParser
                                : Definition::ITEMS_AS_COLLECTION)
             ->setRequired($requiredDefault);
 
+        if ($type === StringMapper::STRING_TYPE) {
+            $prop->setFormat(StringMapper::guessStringFormat($property));
+        }
+
         /*
             since this is an object get the properties of the sub objects
          */
         if (   $type == StringMapper::ARRAY_TYPE
             || $type == StringMapper::OBJECT_TYPE
         ) {
+
+
 
             $prop->setId($id);
 

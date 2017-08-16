@@ -1,7 +1,6 @@
 <?php
 namespace JSONSchemaGenerator\Structure;
 
-use JSONSchemaGenerator\Mappers\PropertyTypeMapper;
 use JSONSchemaGenerator\Mappers\StringMapper;
 
 /**
@@ -65,6 +64,11 @@ class Definition implements \JsonSerializable
      * @var integer
      */
     protected $max = null;
+
+    /**
+     * @var string|null $format guessed format from string or null if none
+     */
+    protected $format;
 
     /**
      * sub properties
@@ -379,8 +383,8 @@ class Definition implements \JsonSerializable
             $fa->description = $this->getDescription();
         }
 
-        if ($fa->type == PropertyTypeMapper::INTEGER_TYPE ||
-            $fa->type == PropertyTypeMapper::NUMBER_TYPE
+        if ($fa->type === StringMapper::INTEGER_TYPE ||
+            $fa->type === StringMapper::NUMBER_TYPE
         ) {
             if (!empty($this->min)) {
                 $fa->min = $this->getMin();
@@ -388,6 +392,12 @@ class Definition implements \JsonSerializable
             if (!empty($this->max)) {
                 $fa->max = $this->getMax();
             }
+        }
+        
+        if (  $fa->type === StringMapper::STRING_TYPE
+           && $this->getFormat()
+        ) {
+            $fa->format = $this->getFormat();
         }
 
         /*
@@ -450,6 +460,21 @@ class Definition implements \JsonSerializable
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
+    public function getFormat()
+    {
+        return $this->format;
+    }
+
+    /**
+     * @param null|string $format
+     */
+    public function setFormat($format)
+    {
+        $this->format = $format;
+    }
 
 
     /**
