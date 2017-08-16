@@ -1,6 +1,7 @@
 # PHP JSON Schema Generator 
 
 ![Build Status](https://travis-ci.org/evaisse/php-json-schema-generator.svg?branch=master#)
+[![codecov](https://codecov.io/gh/evaisse/php-json-schema-generator/branch/master/graph/badge.svg)](https://codecov.io/gh/evaisse/php-json-schema-generator)
 
 PHP JSON Schema Generator, introduction to json schema below :
  
