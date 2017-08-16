@@ -1,7 +1,7 @@
 # PHP JSON Schema Generator 
 ======================
 
-[![Build Status](https://secure.travis-ci.org/solvire/php-json-schema-generator.png)](http://travis-ci.org/solvire/php-json-schema-generator)
+![Build Status](https://travis-ci.org/evaisse/php-json-schema-generator#)
 
 Package: php-json-schema-generator
 
