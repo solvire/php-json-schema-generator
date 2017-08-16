@@ -30,9 +30,11 @@ Most simple case
     //         "b": {
     //           "type": "integer"
     //         }
-    //       }
+    //       },
+    //       "required": ["b"]
     //     }
-    //   }
+    //   },
+    //   "required": ["a"]
     // }
 
 Default configuration values 

@@ -209,16 +209,4 @@ class GeneratorTest extends JSONSchemaTestCase
     }
 
 
-
-    /**
-     * display output only if getenv('DEBUG') is set
-     */
-    protected function debug()
-    {
-        if (getenv('DEBUG')) {
-            foreach (func_get_args() as $a) {
-                is_scalar($a) ? var_dump($a) : print_r($a);
-            }
-        }
-    }
 }

@@ -56,6 +56,8 @@ abstract class JSONSchemaTestCase extends \PHPUnit_Framework_TestCase
      */
     protected function validateSchemaAgainst($schema, $inputJson)
     {
+        $this->debug("Schema => $schema", "JSON Struct => $inputJson");
+
         /*
          * Validate schema regarding the spec
          */
@@ -75,5 +77,25 @@ abstract class JSONSchemaTestCase extends \PHPUnit_Framework_TestCase
             $validator->fails(),
             'should validate that the given schema '.$schema.' validate the input : '.$inputJson
         );
+    }
+
+
+
+    /**
+     * display output only if getenv('DEBUG') is set
+     */
+    protected function debug()
+    {
+        if (getenv('DEBUG')) {
+            foreach (func_get_args() as $a) {
+                if (is_string($a)) {
+                    empty($a) ? var_dump($a) : print_r($a);
+                } else if (is_scalar($a)) {
+                    var_dump($a);
+                } else {
+                    print_r($a);
+                }
+            }
+        }
     }
 }
