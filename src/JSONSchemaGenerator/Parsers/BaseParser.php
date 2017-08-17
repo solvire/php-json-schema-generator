@@ -213,8 +213,6 @@ class BaseParser
             || $type == StringMapper::OBJECT_TYPE
         ) {
 
-
-
             $prop->setId($id);
 
             foreach ($property as $key => $p) {

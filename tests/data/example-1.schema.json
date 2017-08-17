@@ -12,14 +12,14 @@
                     {
                         "type": "object",
                         "required": [
-                            "title",
-                            "extention",
-                            "mimeType",
-                            "linkTo",
-                            "id",
-                            "createdOn",
                             "createdBy",
-                            "extension"
+                            "createdOn",
+                            "extension",
+                            "extention",
+                            "id",
+                            "linkTo",
+                            "mimeType",
+                            "title"
                         ],
                         "properties": {
                             "title": {

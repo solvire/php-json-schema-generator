@@ -6,11 +6,11 @@
             {
                 "type": "object",
                 "required": [
+                    "country",
                     "id",
                     "ip",
-                    "country",
-                    "userAgent",
-                    "saveDate"
+                    "saveDate",
+                    "userAgent"
                 ],
                 "properties": {
                     "id": {

@@ -320,6 +320,7 @@ class Definition implements \JsonSerializable
                 $requireds[] = $name;
             }
         }
+        sort($requireds);
         return $requireds;
     }
 
@@ -420,6 +421,7 @@ class Definition implements \JsonSerializable
             } else {
                 // collection of various schema using 'anyOf'
                 $fa->items = new \StdClass();
+                // deduplicate items in anyOf type
                 $fa->items->anyOf = $items;
             }
 
@@ -492,7 +494,29 @@ class Definition implements \JsonSerializable
      */
     function equals(Definition $d)
     {
-        return "$d" === "$this";
+        $one = json_decode(json_encode($d), true);
+        $two = json_decode(json_encode($this), true);
+
+        $this->sortJsonArray($one);
+        $this->sortJsonArray($two);
+
+        return json_encode($one) === json_encode($two);
+    }
+
+    /**
+     * Recursively key sorting for json comparison
+     * @param $arr
+     * @return mixed
+     */
+    protected function sortJsonArray(&$arr)
+    {
+        foreach ($arr as &$value) {
+            if (is_array($value)) {
+                $this->sortJsonArray($value);
+            }
+        }
+        ksort($arr);
+        return $arr;
     }
 
     /**

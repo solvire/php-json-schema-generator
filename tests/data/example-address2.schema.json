@@ -11,8 +11,8 @@
         "address": {
             "type": "object",
             "required": [
-                "streetAddress",
-                "city"
+                "city",
+                "streetAddress"
             ],
             "properties": {
                 "streetAddress": {
@@ -45,8 +45,8 @@
                     {
                         "type": "object",
                         "required": [
-                            "type",
-                            "number"
+                            "number",
+                            "type"
                         ],
                         "properties": {
                             "type": {
@@ -60,9 +60,9 @@
                     {
                         "type": "object",
                         "required": [
-                            "type",
+                            "digits",
                             "number",
-                            "digits"
+                            "type"
                         ],
                         "properties": {
                             "type": {

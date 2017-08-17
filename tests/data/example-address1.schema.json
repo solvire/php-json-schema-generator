@@ -9,8 +9,8 @@
         "address": {
             "type": "object",
             "required": [
-                "streetAddress",
-                "city"
+                "city",
+                "streetAddress"
             ],
             "properties": {
                 "streetAddress": {
@@ -28,8 +28,8 @@
                     {
                         "type": "object",
                         "required": [
-                            "type",
-                            "number"
+                            "number",
+                            "type"
                         ],
                         "properties": {
                             "type": {

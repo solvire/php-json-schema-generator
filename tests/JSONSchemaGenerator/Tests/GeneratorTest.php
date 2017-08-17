@@ -55,9 +55,9 @@ class GeneratorTest extends JSONSchemaTestCase
          * Check mocks against their schema
          */
         $this->assertEquals(
-            $schema,
             json_encode(json_decode(file_get_contents(str_replace('.input.json', '.schema.json', $file)))), // disable pretty prinitng
-            'Should be equals to data examples'
+            $schema,
+            'Should be equal to data example in ' . basename(str_replace('.input.json', '.schema.json', $file))
         );
     }
 
@@ -132,7 +132,23 @@ class GeneratorTest extends JSONSchemaTestCase
         
     }
 
+    /**
+     * the most basic functionality
+     * simple tests to just show it's working
+     */
+    public function testDeduplicationOfSchemaInCollection()
+    {
+        $result = Generator::fromJson($this->addressJson1);
 
+        $this->debug($result);
+
+        $this->validateSchemaAgainst($result, $this->addressJson1);
+
+        $decoded = json_decode($result);
+
+        $this->assertTrue(is_array($decoded->properties->phoneNumber->items->anyOf));
+        $this->assertCount(1, $decoded->properties->phoneNumber->items->anyOf);
+    }
 
     /**
      * the most basic functionality

@@ -122,3 +122,11 @@ debug with
 
     DEBUG=true composer test -- --filter="SearchWord" # for filtering *SearchWord* test case with output debugging
 
+
+## Roadmap
+
+  - Adjust schema comparison using re-ordering of properties to compare two schema against 
+  their semantic values instead of just comparing their JSON form. For example `{ a: 1, b: 2 }`, and `{ b: 2, a: 1 }` 
+  should result in the same schema.
+  
+  - provide an option to allow null values in most fields `("type": ["string", "null"]}`
