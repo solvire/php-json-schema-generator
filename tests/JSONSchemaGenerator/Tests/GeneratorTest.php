@@ -235,4 +235,20 @@ class GeneratorTest extends JSONSchemaTestCase
     }
 
 
+
+    public function testFrom()
+    {
+        $result = Generator::from(json_decode($this->addressJson2));
+
+        $this->validateSchemaAgainst($result, $this->addressJson2);
+
+        $this->assertTrue(is_string($result));
+        $decoded = json_decode($result);
+
+        $this->debug($result);
+
+        $this->assertCount(4, $decoded->required, 'should have required properties');
+        $this->assertCount(2, $decoded->properties->bar->required, 'sub selements should have required properties');
+    }
+
 }
