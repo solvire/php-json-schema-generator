@@ -19,6 +19,10 @@ To validate your structure against a given schema, you can use :
 
 ## Quickstart
 
+Install using composer
+
+    composer require evaisse/php-json-schema-generator
+    
 Most simple case
 
     $output = JSONSchemaGenerator\Generator::fromJson('{"a":{"b":2}');
@@ -107,11 +111,6 @@ Advanced usage
 For more advanced usage, see `tests/JSONSchemaGenerator/Tests/GeneratorTest.php`
  
 
-## Installation 
-
-Simple, assuming you use composer. Add the below lines to your composer.json and run composer update.  
-
-    composer require evaisse/php-json-schema-generator
 
     
 ## Testing
