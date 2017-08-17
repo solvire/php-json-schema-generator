@@ -3,14 +3,14 @@
 ![Build Status](https://travis-ci.org/evaisse/php-json-schema-generator.svg?branch=master#)
 [![codecov](https://codecov.io/gh/evaisse/php-json-schema-generator/branch/master/graph/badge.svg)](https://codecov.io/gh/evaisse/php-json-schema-generator)
 
-original forked from [solvire/php-json-schema-generator](https://github.com/solvire/php-json-schema-generator)
+Originaly forked from [solvire/php-json-schema-generator](https://github.com/solvire/php-json-schema-generator)
 
-PHP JSON Schema Generator, introduction to json schema below :
+Introduction to json schema below (and tools) :
  
- - http://json-schema.org
- - http://www.jsonschemavalidator.net
- - https://www.openapis.org
- - https://jsonschema.net/#/editor
+ - http://json-schema.org — reference
+ - http://www.jsonschemavalidator.net - validator (not 100% valid) 
+ - https://www.openapis.org - use json schema to define REST API docs
+ - https://jsonschema.net/#/editor - convenient editor for json schema 
  
 To validate your structure against a given schema, you can use :
 
