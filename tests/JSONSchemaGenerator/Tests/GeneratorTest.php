@@ -45,10 +45,17 @@ class GeneratorTest extends JSONSchemaTestCase
     public function testDefaultGeneration($file)
     {
         $json = file_get_contents($file);
+        $expectedJsonSchema = file_get_contents(str_replace('.input.json', '.schema.json', $file));
         $schema = Generator::fromJson($json);
+
 
         $this->assertTrue(!!$schema);
 
+        $this->debug($schema);
+
+        $this->assertJsonStringEqualsJsonString($expectedJsonSchema, $schema);
+
+//        $this->assertEquals($json, json_encode(json_decode($schema), JSON_PRETTY_PRINT));
         $this->validateSchemaAgainst($schema, $json);
 
         /*

@@ -67,25 +67,25 @@ class PropertyTypeMapper
     public static function map($property)
     {
         // need to find a better way to determine what the string is
-        switch ($property)
-        {
-            case (is_float($property)):
+        switch (strtolower(gettype($property))) {
+            case "double":
+            case "float":
                 return PropertyTypeMapper::NUMBER_TYPE;
-            case (is_int($property)):
+            case 'integer':
                 return PropertyTypeMapper::INTEGER_TYPE;
-            case (is_bool($property)):
+            case 'boolean':
                 return PropertyTypeMapper::BOOLEAN_TYPE;
-            case (is_array($property)):
+            case 'array':
                 if (array_values($property) !== $property) { // hash values
                     return PropertyTypeMapper::OBJECT_TYPE;
                 } else {
                     return PropertyTypeMapper::ARRAY_TYPE;
                 }
-            case (is_null($property)):
+            case 'NULL':
                 return PropertyTypeMapper::NULL_TYPE;
-            case (is_object($property)):
+            case 'object':
                 return PropertyTypeMapper::OBJECT_TYPE;
-            case (is_string($property)):
+            case 'string':
                 return PropertyTypeMapper::STRING_TYPE;
             default:
                 throw new UnmappableException("The provided argument property");
