@@ -1,0 +1,15 @@
+{
+    "error": {
+        "type": "this error type",
+        "code": 54564897,
+        "message": "broken foo",
+        "trace": [
+            "#0 ...",
+            "#1 ...",
+            "#2 ....."
+        ],
+        "debug": "debug informations"
+    },
+    "data": [],
+    "errors": []
+}

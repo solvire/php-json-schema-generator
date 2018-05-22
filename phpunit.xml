@@ -10,22 +10,22 @@
          testSuiteLoaderClass="PHPUnit_Runner_StandardTestSuiteLoader">
 
     <testsuites>
-        <testsuite>
-            <directory>./tests/JSONSchema</directory>
+        <testsuite name="Test Suite">
+            <directory>./tests/JSONSchemaGenerator</directory>
         </testsuite>
     </testsuites>
-
-    <logging>
-        <log type="junit" target="build/artifacts/logs/junit.xml" logIncompleteSkipped="false" />
-        <log type="coverage-html" target="report" charset="UTF-8" />
-    </logging>
-
     <filter>
-        <whitelist>
-            <directory suffix=".php">./src/JSONSchema</directory>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./src/JSONSchemaGenerator</directory>
             <exclude>
+                <directory>./vendor</directory>
+                <directory>./Tests</directory>
             </exclude>
         </whitelist>
     </filter>
-
+    <logging>
+        <log type="coverage-clover" target="build/logs/clover.xml"/>
+        <log type="junit" target="build/artifacts/logs/junit.xml" logIncompleteSkipped="false" />
+        <log type="coverage-html" target="report" charset="UTF-8" />
+    </logging>
 </phpunit>

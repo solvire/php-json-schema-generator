@@ -1,0 +1,57 @@
+{
+    "$schema": "http:\/\/json-schema.org\/draft-04\/schema#",
+    "type": "object",
+    "required": [
+        "data",
+        "error",
+        "errors"
+    ],
+    "properties": {
+        "error": {
+            "type": "object",
+            "required": [
+                "code",
+                "debug",
+                "message",
+                "trace",
+                "type"
+            ],
+            "properties": {
+                "type": {
+                    "type": "string"
+                },
+                "code": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "trace": {
+                    "type": "array",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            }
+                        ]
+                    }
+                },
+                "debug": {
+                    "type": "string"
+                }
+            }
+        },
+        "data": {
+            "type": "array",
+            "items": {
+                "anyOf": []
+            }
+        },
+        "errors": {
+            "type": "array",
+            "items": {
+                "anyOf": []
+            }
+        }
+    }
+}

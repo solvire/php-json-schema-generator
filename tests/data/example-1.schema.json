@@ -1,0 +1,64 @@
+{
+    "$schema": "http:\/\/json-schema.org\/draft-04\/schema#",
+    "type": "object",
+    "required": [
+        "documents"
+    ],
+    "properties": {
+        "documents": {
+            "type": "array",
+            "items": {
+                "anyOf": [
+                    {
+                        "type": "object",
+                        "required": [
+                            "createdBy",
+                            "createdOn",
+                            "extension",
+                            "extention",
+                            "id",
+                            "linkTo",
+                            "mimeType",
+                            "title"
+                        ],
+                        "properties": {
+                            "title": {
+                                "type": "string"
+                            },
+                            "extention": {
+                                "type": "string"
+                            },
+                            "mimeType": {
+                                "type": "string"
+                            },
+                            "linkTo": {
+                                "type": "object",
+                                "required": [
+                                    "contactId"
+                                ],
+                                "properties": {
+                                    "contactId": {
+                                        "type": "integer"
+                                    }
+                                }
+                            },
+                            "id": {
+                                "type": "integer"
+                            },
+                            "createdOn": {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "createdBy": {
+                                "type": "string"
+                            },
+                            "extension": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

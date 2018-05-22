@@ -1,0 +1,37 @@
+{
+    "$schema": "http:\/\/json-schema.org\/draft-04\/schema#",
+    "type": "array",
+    "items": {
+        "anyOf": [
+            {
+                "type": "object",
+                "required": [
+                    "country",
+                    "id",
+                    "ip",
+                    "saveDate",
+                    "userAgent"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "ip": {
+                        "type": "string",
+                        "format": "ipv4"
+                    },
+                    "country": {
+                        "type": "string"
+                    },
+                    "userAgent": {
+                        "type": "string"
+                    },
+                    "saveDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            }
+        ]
+    }
+}
