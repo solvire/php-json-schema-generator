@@ -82,7 +82,7 @@ class PropertyTypeMapper
                 }
 
                 return PropertyTypeMapper::ARRAY_TYPE;
-            case 'NULL':
+            case 'null':
                 return PropertyTypeMapper::NULL_TYPE;
             case 'object':
                 return PropertyTypeMapper::OBJECT_TYPE;
