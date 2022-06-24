@@ -49,8 +49,9 @@ class PropertyTypeMapper
      */
     public function __construct($property)
     {
-        if(!is_string($property))
-            new \InvalidArgumentException("Parameter provided must be a string");
+        if (!is_string($property)) {
+            throw new \InvalidArgumentException("Parameter provided must be a string");
+        }
             
         $this->property = $property;
     }
@@ -78,9 +79,9 @@ class PropertyTypeMapper
             case 'array':
                 if (array_values($property) !== $property) { // hash values
                     return PropertyTypeMapper::OBJECT_TYPE;
-                } else {
-                    return PropertyTypeMapper::ARRAY_TYPE;
                 }
+
+                return PropertyTypeMapper::ARRAY_TYPE;
             case 'NULL':
                 return PropertyTypeMapper::NULL_TYPE;
             case 'object':
@@ -100,7 +101,7 @@ class PropertyTypeMapper
     
     public function getProperty()
     {
-        return $this->property();
+        return $this->property;
     }
     
     public function getPropertyType()

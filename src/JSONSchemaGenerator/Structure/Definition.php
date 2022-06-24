@@ -524,8 +524,9 @@ class Definition implements \JsonSerializable
      */
     function __toString()
     {
-        return json_encode($this);
+        if (!is_string($res = json_encode($this))) {
+            return 'null';
+        }
+        return $res;
     }
-
-
 }
