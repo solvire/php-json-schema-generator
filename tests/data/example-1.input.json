@@ -1,0 +1,16 @@
+{
+    "documents": [
+        {
+            "title": "ldkjdkjd lkdljdl jdl",
+            "extention": "pdf",
+            "mimeType": "application/pdf",
+            "linkTo": {
+                "contactId": 111
+            },
+            "id": 666,
+            "createdOn": "2016-09-20T00:00:00+02:00",
+            "createdBy": "BATCH-foobar",
+            "extension": "pdf"
+        }
+    ]
+}
